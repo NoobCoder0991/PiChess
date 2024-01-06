@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300&family=Nunito+Sans:opsz,wght@6..12,300&display=swap');
+
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2&display=swap');
+
+    :root{
+        --body-color:#bababa;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-family: 'Exo 2', sans-serif;
+        /* background-color: var(--body-color); */
+
+
+    }
+
+    .main {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        background-color: whitesmoke;
+        width: 50%;
+        min-height: 50vh;
+
+        box-shadow: 0px 0px 2px darkcyan;
+
+    }
+
+    .main-child {
+        margin: 1vh 0;
+
+    }
+
+    .input {
+        padding: 0.5vh 0.5vw;
+        width: 30vw;
+        outline: none;
+        border: none;
+        outline: none;
+
+    }
+
+    .button {
+        background-color: darkcyan;
+        color: white;
+        min-width: 7vw;
+        border: none;
+        padding: 1vh 0.5vw;
+        cursor: pointer;
+    }
+
+    .logo {
+        display: flex;
+        height: 5vw;
+        /* justify-content: center; */
+        align-items: center;
+        color: darkcyan;
+        font-weight: bold;
+        font-size: 25px;
+
+    }
+
+    .logo-image {
+        height: 100%;
+    }
+
+    .title {
+        color: darkcyan;
+    }
+
+    .subtitle {
+        display: flex;
+        font-size: small;
+        color: grey;
+
+    }
+
+    .footer {
+        margin-top: 10vh;
+    }
+
+    .option {
+
+        font-size: bold;
+        font-size: large;
+        cursor: pointer;
+        background-color: darkcyan;
+        text-align: center;
+        color: white;
+    }
+
+    /*loader*/
+    .loader {
+        border: 8px solid whitesmoke;
+        border-top: 8px solid darkcyan;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 0.6s linear infinite;
+        position: absolute;
+    }
+
+    .warning-pop-up {
+        position: absolute;
+        background-color: orangered;
+        color: white;
+        font-weight: bold;
+        top: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 2vh 0.5vw;
+
+        font-size: large;
+        display: none;
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @media screen and (max-width:800px) {
+        .main {
+            width: 90%;
+        }
+
+        .logo {
+            display: flex;
+            height: 10vw;
+            /* justify-content: center; */
+            align-items: center;
+            color: darkcyan;
+            font-weight: bold;
+            font-size: 25px;
+
+        }
+
+        .logo-image {
+            height: 100%;
+        }
+
+        .input {
+            width: 100%;
+            outline: none;
+            border: none;
+        }
+
+    }
+</style>
+
+<body>
+    <div class="warning-pop-up">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis incidunt fuga nisi,
+        totam ducimus odio quia nihil, rem hic voluptas dolore odit voluptatum.</div>
+    <div class="logo">
+        <!-- <i class="fas fa-chess-board"></i> -->
+        <img class='logo-image' src="./piece-images-2/logo.jpg" alt="logo">
+        <div class="name">PiChess</div>
+
+    </div>
+    <div class="main">
+
+        <div class="title">
+            <h2>Sign up</h2>
+
+        </div>
+
+        <div class="main-child">
+
+            <input type="text" name="email" class='input' placeholder="Email Id">
+            <div class="subtitle">
+
+                <div class="already-account">Aleardy have an account? <a href="/">Sign in </a></div>
+            </div>
+        </div>
+        <div class="main-child">
+
+            <button class="button">Get OTP</button>
+
+        </div>
+        <!-- <div class="footer">
+            <div class="title">
+                
+                Login with...
+            </div>
+            <div class="login-options">
+                <div class="option"><i>Google</i></div>
+                
+            </div>
+        </div> -->
+    </div>
+    <div class="subtitle">
+        &copy;PiChess
+
+    </div>
+</body>
+<script>
+    //event listener to the otp button
+    document.getElementsByClassName('button')[0].addEventListener('click', e => {
+        let email = document.getElementsByClassName('input')[0].value
+        if (emailFormatValidity(email)) {
+            loadingAnimation()
+
+        }
+        else {
+            warningPopUp('Enter a valid email address!')
+        }
+
+    })
+    //function loading animation
+
+    function loadingAnimation() {
+        let loader = document.createElement('div')
+
+        loader.classList.add('loader')
+
+        document.body.appendChild(loader)
+
+        document.getElementsByClassName('main')[0].style.opacity = 0.1
+        document.getElementsByClassName('main')[0].style.pointerEvents = 'none'
+        document.querySelector('.loader').style.opacity = 1
+
+    }
+    function stopLoadingAnimation() {
+        document.getElementsByClassName('loader')[0].remove()
+    }
+    function warningPopUp(text) {
+        let warndiv=document.getElementsByClassName('warning-pop-up')[0]
+        document.getElementsByClassName('warning-pop-up')[0].innerHTML = text
+        document.getElementsByClassName('warning-pop-up')[0].style.display = 'block'
+        for(let i=0;i<=1;i+=0.1){
+            setTimeout(() => {
+                warndiv.style.opacity=i
+                
+            }, 8*i);
+        }
+        setTimeout(() => {
+            document.getElementsByClassName('warning-pop-up')[0].style.display = 'none'
+            document.getElementsByClassName('warning-pop-up')[0].style.opacity = 0
+
+
+        }, 1000);
+
+    }
+    function emailFormatValidity(email) {
+
+        // Regular expression for a simple email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Test the provided text against the regex
+        return emailRegex.test(email);
+
+    }
+
+</script>
+
+</html>

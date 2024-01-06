@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap');
+
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Hind Siliguri', sans-serif;
+        background-color: rgb(65,63,63);
+        color: #bababa;
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: whitesmoke;
+        background-color: #262421;
+        padding: 3vh 1vw;
+
+        /* box-shadow: 0px 0px 2px grey; */
+        width: 50vw;
+
+
+
+    }
+
+    .field {
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        flex-direction: column;
+        margin: 1vw;
+        
+    }
+    .input{
+        background-color:#202020;
+        color: #bababa;
+        border-radius: 0.5vw;
+    }
+    .description{
+        background-color: #202020;
+        color: #bababa;
+        border-radius: 0.5vw;
+    }
+
+    .form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 1.5em;
+        /* font-weight: bold; */
+        /* color: darkcyan; */
+       
+        text-align: center;
+        
+    }
+
+    .input {
+        width: 50vw;
+        padding: 1.5vh 0;
+        border: none;
+        outline: none;
+    }
+
+    #description {
+        outline: none;
+        min-height: 15vh;
+        border: none;
+
+    }
+
+    .button {
+        background-color: darkcyan;
+        border-radius: 4px;
+
+        text-align: center;
+        color: white;
+        cursor: pointer;
+        padding: 1vh 0;
+        border: none;
+        margin-left:35% ;
+        margin-right:35% ;
+        
+
+
+    }
+
+    .label {
+        color: grey;
+    }
+
+    .check-field {
+        flex-direction: row;
+        margin: 0;
+
+    }
+
+    .text {
+        color: grey;
+        font-size: small;
+    }
+
+    new {
+        color: darkcyan;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .logo {
+        display: flex;
+        height: 5vw;
+        /* justify-content: center; */
+        align-items: center;
+        color: darkcyan;
+        font-weight: bold;
+        font-size: 25px;
+
+    }
+
+    .logo-image {
+        height: 100%;
+    }
+
+    .pop-up-div {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1vh 1vw;
+            min-height: 30vh;
+            width: 40vw;
+            background-color: #262421;
+            border: 1px solid grey;
+            border-radius: 1vw;
+            top: 30vh;
+        }
+
+        .cancel-button {
+            background-color: darkcyan;
+            padding: 0.8vh 0.8vw;
+            color: white;
+            cursor: pointer;
+            margin-top: 5vh;
+        }
+
+    @media screen and (max-width:800px) {
+        .field {
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            flex-direction: column;
+            margin: 3vw;
+            width: 100%;
+        
+        }
+        
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: whitesmoke;
+            background-color: #262421;
+            padding: 3vh 1vw;
+            width: 95vw;
+
+
+
+        }
+
+        .form {
+            width: 90%;
+        }
+
+        .input {
+            width: 90%;
+        }
+
+        #description {
+            width: 90%;
+            min-height: 15vh;
+        }
+
+        .logo {
+            display: flex;
+            height: 10vw;
+            /* justify-content: center; */
+            /* align-items: center; */
+            color: darkcyan;
+            font-weight: bold;
+            font-size: 25px;
+
+        }
+
+        .logo-image {
+            height: 100%;
+        }
+
+        .pop-up-div {
+            display: flex;
+            flex-direction: column;
+            padding: 1vh 1vw;
+            min-height: 25vh;
+            width: 90vw;
+            background-color: whitesmoke;
+            top: 20vh;
+        }
+
+
+    }
+</style>
+
+<body>
+    <div class="logo">
+        <!-- <i class="fas fa-chess-board"></i> -->
+        <!-- <img class='logo-image' src="./piece-images-2/logo.jpg" alt=""> -->
+        <div class="name">PiChess</div>
+
+    </div>
+    <div class="main">
+        <div class="title">Please drop your suggestion or any bug your have encountered while using this website</div>
+        <div class="form">
+            <div class="field">
+                <lable class="label">Enter your email address</lable>
+                <input type="text" class="input" id="email" placeholder="Email Id">
+            </div>
+            <div class="field">
+                <lable class="label">Description</lable>
+                <textarea name="" id="description" placeholder="Description..." class="description"></textarea>
+            </div>
+            <div class="field">
+                <div class="text">
+                    Please note that our platform is continuously developing and evolving.Your <new>donations and
+                        contributions</new> would be highly appreciated.
+                </div>
+            </div>
+            <div class="field">
+
+                <button class="button">Submit</button>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    let submitButton = document.getElementsByClassName('button')[0]
+    submitButton.addEventListener('click', e => {
+        let pop=popUp('Thank you for your feedback. We will look forward to your suggestions.')
+        pop.addEventListener('click',e=>{
+            window.location.href='/'
+        })
+    })
+
+
+    function popUp(text) {
+        document.body.innerHTML=''
+        let popupdiv = document.createElement('div')
+        popupdiv.classList.add('pop-up-div')
+        let textDiv = document.createElement('div')
+        textDiv.innerHTML = text
+        let btn = document.createElement('div')
+        btn.classList.add('cancel-button')
+        btn.innerHTML = 'Got it'
+        popupdiv.appendChild(textDiv)
+        popupdiv.appendChild(btn)
+        
+        document.body.appendChild(popupdiv)
+        
+
+        btn.addEventListener('click', e => {
+            popupdiv.remove()
+      
+        })
+        return btn;
+    }
+
+
+</script>
+
+</html>
