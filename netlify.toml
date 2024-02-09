@@ -1,0 +1,20 @@
+[build]
+  command = "npm run build"
+  publish = "public"
+  functions = "functions"
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+[context.deploy-preview]
+  command = "npm run build:preview"
+
+[context.branch-deploy]
+  command = "npm run build:branch"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+

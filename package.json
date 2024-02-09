@@ -9,6 +9,7 @@
   "author": "Shafaat_Hussain",
   "license": "ISC",
   "dependencies": {
+    "nodemon": "^3.0.2",
     "socket.io": "^4.7.2"
   }
 }
