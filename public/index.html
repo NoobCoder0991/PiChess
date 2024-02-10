@@ -302,76 +302,80 @@
 </body>
 
 <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        var socket = io();
 
-    var socket = io();
+        var playingOnline = false;
 
-    var playingOnline = false;
+        /* Evenet listener to play online button*/
+        let playOnlineButton = document.getElementById('play-online-button')
+        playOnlineButton.addEventListener('click', e => {
+            if (playingOnline) {
+                playOnlineButton.innerHTML = '<i class="fas fa-globe"></i> Play Online';
+                playOnlineButton.classList.remove('activePlayButton');
+                socket.emit('cancel-play-online-request', {});
+                playingOnline = false
 
-    /* Evenet listener to play online button*/
-    let playOnlineButton = document.getElementById('play-online-button')
-    playOnlineButton.addEventListener('click', e => {
-        if (playingOnline) {
-            playOnlineButton.innerHTML = '<i class="fas fa-globe"></i> Play Online';
-            playOnlineButton.classList.remove('activePlayButton');
-            socket.emit('cancel-play-online-request', {});
-            playingOnline = false
+            }
+            else {
+                playOnlineButton.innerHTML = 'Matching<i class="fas fa-spinner fa-spin"><i>';
+                playOnlineButton.classList.add('activePlayButton')
+                socket.emit('play-online-request', {});
+                socket.on('play-online-responce', data => {
+                    window.location.href = data.url;
+                })
+                playingOnline = true
+            }
 
-        }
-        else {
-            playOnlineButton.innerHTML = 'Matching<i class="fas fa-spinner fa-spin"><i>';
-            playOnlineButton.classList.add('activePlayButton')
-            socket.emit('play-online-request', {});
-            socket.on('play-online-responce', data => {
-                window.location.href = data.url;
-            })
-            playingOnline = true
-        }
+        })
+
+        var playingComputer = false;
+
+        let playComputerButton = document.getElementById('play-mycomputer-button');
+        playComputerButton.addEventListener("click", e => {
+            if (!playingComputer) {
+                socket.emit('play-mycomputer-request', {});
+                playComputerButton.classList.add('activePlayButton');
+                playComputerButton.innerHTML = 'Preparing...'
+                playingComputer = true;
+                socket.on('play-mycomputer-responce', data => {
+                    window.location.href = data.url
+                })
+            }
+            else {
+                playComputerButton.classList.remove('activePlayButton');
+                playComputerButton.innerHTML = '<i class="fas fa-desktop"></i> Play with My Computer'
+                playingComputer = false;
+            }
+
+        })
+
+        let playStockfishButton = document.getElementById('play-stockfish-button')
+        var playingStockfish = false;
+
+        playStockfishButton.addEventListener("click", e => {
+            if (!playingStockfish) {
+                socket.emit('play-stockfish-request', {});
+                playStockfishButton.classList.add('activePlayButton');
+                playStockfishButton.innerHTML = 'Preparing...'
+                playingStockfish = true;
+                socket.on('play-stockfish-responce', data => {
+                    window.location.href = data.url
+                })
+
+            }
+            else {
+                playStockfishButton.classList.remove('activePlayButton');
+                playStockfishButton.innerHTML = '<i class="fas fa-chess-knight"></i> Play with Stockfish'
+                playingStockfish = false;
+
+            }
+
+        })
 
     })
 
-    var playingComputer = false;
 
-    let playComputerButton = document.getElementById('play-mycomputer-button');
-    playComputerButton.addEventListener("click", e => {
-        if (!playingComputer) {
-            socket.emit('play-mycomputer-request', {});
-            playComputerButton.classList.add('activePlayButton');
-            playComputerButton.innerHTML = 'Preparing...'
-            playingComputer = true;
-            socket.on('play-mycomputer-responce', data => {
-                window.location.href = data.url
-            })
-        }
-        else {
-            playComputerButton.classList.remove('activePlayButton');
-            playComputerButton.innerHTML = '<i class="fas fa-desktop"></i> Play with My Computer'
-            playingComputer = false;
-        }
-
-    })
-
-    let playStockfishButton = document.getElementById('play-stockfish-button')
-    var playingStockfish = false;
-
-    playStockfishButton.addEventListener("click", e => {
-        if (!playingStockfish) {
-            socket.emit('play-stockfish-request', {});
-            playStockfishButton.classList.add('activePlayButton');
-            playStockfishButton.innerHTML = 'Preparing...'
-            playingStockfish = true;
-            socket.on('play-stockfish-responce', data => {
-                window.location.href = data.url
-            })
-
-        }
-        else {
-            playStockfishButton.classList.remove('activePlayButton');
-            playStockfishButton.innerHTML = '<i class="fas fa-chess-knight"></i> Play with Stockfish'
-            playingStockfish = false;
-
-        }
-
-    })
 </script>
 
 </html>
