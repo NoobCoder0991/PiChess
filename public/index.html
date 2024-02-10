@@ -273,19 +273,21 @@
     </section>
     <section class="features">
         <div class="feature">
-            <h2 class="play-button " id="play-online-button">Play Online</h2>
+            <h2 class="play-button " id="play-online-button"><i class="fas fa-globe"></i> Play Online</h2>
             <p class="subtitle">Challenge other players from around the world in real-time.</p>
         </div>
         <div class="feature">
-            <h2 class="play-button" id="play-mycomputer-button">Play with My Computer</h2>
+            <h2 class="play-button" id="play-mycomputer-button"><i class="fas fa-desktop"></i> Play with My Computer
+            </h2>
             <p class="subtitle">Test your skills against our challenging AI opponents.</p>
         </div>
         <div class="feature">
-            <h2 class="play-button" id="play-stockfish-button">Play with Stockfish</h2>
+            <h2 class="play-button" id="play-stockfish-button"><i class="fas fa-chess-knight"></i> Play with Stockfish
+            </h2>
             <p class="subtitle">Play with the strongest Chess Engine till now.</p>
         </div>
         <div class="feature">
-            <h2 class="play-button" id="custom-game-button">Create a custom game</h2>
+            <h2 class="play-button" id="custom-game-button"><i class="fas fa-cogs"></i> Create a custom game</h2>
             <p class="subtitle">Set everthing by yourself.</p>
         </div>
         <!-- Add more features as needed -->
@@ -309,7 +311,7 @@
     let playOnlineButton = document.getElementById('play-online-button')
     playOnlineButton.addEventListener('click', e => {
         if (playingOnline) {
-            playOnlineButton.innerHTML = 'Play Online';
+            playOnlineButton.innerHTML = '<i class="fas fa-globe"></i> Play Online';
             playOnlineButton.classList.remove('activePlayButton');
             socket.emit('cancel-play-online-request', {});
             playingOnline = false
@@ -342,7 +344,7 @@
         }
         else {
             playComputerButton.classList.remove('activePlayButton');
-            playComputerButton.innerHTML = 'Play with My Computer'
+            playComputerButton.innerHTML = '<i class="fas fa-desktop"></i> Play with My Computer'
             playingComputer = false;
         }
 
@@ -364,7 +366,7 @@
         }
         else {
             playStockfishButton.classList.remove('activePlayButton');
-            playStockfishButton.innerHTML = 'Play with Stockfish'
+            playStockfishButton.innerHTML = '<i class="fas fa-chess-knight"></i> Play with Stockfish'
             playingStockfish = false;
 
         }

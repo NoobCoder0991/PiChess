@@ -85,10 +85,13 @@ function handleStockfishConnections(io, app) {
     socket.on("fetch-move", (data) => {
       const fen = data.fen,
         depth = data.depth;
-      stockfish_ouput(fen, depth).then((data) => {
-        console.log("Move", data);
-        socket.emit("fetch-move-responce", data);
-      });
+      stockfish_ouput(fen, depth)
+        .then((data) => {
+          socket.emit("fetch-move-responce", data);
+        })
+        .catch((err) => {
+          console.log("error occured");
+        });
     });
   });
 }

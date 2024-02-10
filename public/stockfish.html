@@ -2527,7 +2527,6 @@
         // Wrapping socket.on in a Promise
         return new Promise((resolve, reject) => {
             socket.emit('fetch-move', { fen: boardToFen(board, color), depth: 15 });
-
             socket.on('fetch-move-responce', (data) => {
                 let initial = data.startIndex, final = data.targetIndex, flag = data.flag;
                 // ACTUALLY PLAYING MOVE
