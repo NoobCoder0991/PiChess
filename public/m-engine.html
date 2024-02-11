@@ -17,7 +17,7 @@
         @import url("https://fonts.googleapis.com/css2?family=Exo+2&display=swap");
 
         :root {
-            --body-color: #262421;
+            --body-color: #252421;
             --active-color: #629924;
         }
 
@@ -31,7 +31,8 @@
             align-items: center;
             font-family: "Exo 2", sans-serif;
             color: #bababa;
-            background: rgb(22, 21, 18) linear-gradient(rgb(46, 42, 36), rgb(22, 21, 18) 116px) no-repeat scroll 0% 0% / auto padding-box border-box;
+            /* background: rgb(22, 21, 18) linear-gradient(rgb(46, 42, 36), rgb(22, 21, 18) 116px) no-repeat scroll 0% 0% / auto padding-box border-box; */
+            background-color: var(--body-color);
             z-index: 0;
         }
 
@@ -43,6 +44,7 @@
         }
 
         #chessBoard {
+            position: relative;
             display: grid;
             grid-template-rows: repeat(8, 1fr);
             grid-template-columns: repeat(8, 1fr);
@@ -304,7 +306,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #262421;
+            background-color: #222;
+            box-shadow: 1px 1px 3px #555;
+            border-radius: 1%;
             z-index: 1;
             min-width: 35vw;
             display: none;
@@ -328,13 +332,18 @@
             background-color: #333;
         }
 
-        .level:hover {
-            background-color: var(--active-color);
-        }
-
         .active-level {
             background-color: var(--active-color);
         }
+
+        .level:hover {
+            background-color: #444;
+        }
+
+        .active-level:hover {
+            background-color: var(--active-color);
+        }
+
 
         .button {
             background-color: var(--active-color);
@@ -3132,6 +3141,20 @@
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+    }
+
+    function addTransitionToMove(board, initial, final) {
+        let rect1 = chessPieces[initial].getBoundingClientRect()
+        let rect2 = chessPieces[final].getBoundingClientRect()
+
+        let x1 = rect1.left, y1 = rect1.top;
+        let x2 = rect2.left, y2 = rect2.top;
+        console.log(x1, y1, x2, y2)
+
+        chessPieces[initial].style.position = "absolute"
+
+        chessPieces[initial].style.left = x1 + 'px';
+        chessPieces[initial].style.top = y1 + 'px';
     }
 </script>
 
