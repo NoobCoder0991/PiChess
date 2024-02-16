@@ -240,7 +240,6 @@
             pointer-events: none;
         }
 
-
         .rematch {
             width: 100%;
             font-size: xx-large;
@@ -625,16 +624,15 @@
     var ready = false;
     var socket = io("/playOnline");
     socket.emit("ready", { url: window.location.href, color: 1 });
-    socket.on('ready-ok', data => {
+    socket.on("ready-ok", (data) => {
         ready = true;
-    })
+    });
 
     //
 
     setInterval(() => {
         if (ready) {
             socket.emit("updateTime", {});
-
         }
     }, 1000);
     socket.on("updateTimeResponce", (data) => {
@@ -1620,9 +1618,10 @@
     }
 
     function highlightLastMove(initial, final) {
-        document.getElementsByClassName('square')[initial].style.backgroundColor = 'rgb(180,203,99)';
-        document.getElementsByClassName('square')[final].style.backgroundColor = 'rgb(180,203,99)';
-
+        document.getElementsByClassName("square")[initial].style.backgroundColor =
+            "rgb(180,203,99)";
+        document.getElementsByClassName("square")[final].style.backgroundColor =
+            "rgb(180,203,99)";
     }
 
     //adding drag and drop behaviour

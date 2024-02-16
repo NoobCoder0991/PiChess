@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PiChess - Play Chess Online</title>
+    <style>
+      /* Resetting default margins and paddings */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* Body styles */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #1a1a1a; /* Darker background color for dark mode */
+        color: #fff; /* Light text color */
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Navbar styles */
+      .navbar {
+        background-color: #333; /* Dark color for the navbar */
+        padding: 10px 0;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+      }
+
+      .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .navbar-brand {
+        font-size: 1.5rem;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .navbar-nav {
+        list-style-type: none;
+        display: flex;
+      }
+
+      .nav-item {
+        margin-right: 15px;
+      }
+
+      .nav-link {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: #66d9ff;
+      }
+
+      /* Main Content styles */
+      .container {
+        padding-top: 60px; /* Adjusting padding for navbar */
+        margin-top: 60px; /* Adjusting margin for content */
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        color: #66d9ff;
+      }
+
+      /* Chess Puzzle Section styles */
+      .chess-board {
+        background-color: #777; /* Darker color for chessboard background */
+        width: 100%;
+        height: 300px;
+        margin-bottom: 20px;
+        /* Add more styles for chessboard */
+      }
+
+      .btn-solve {
+        background-color: #66d9ff; /* Primary color for solve button */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-solve:hover {
+        background-color: #00aaff; /* Darker shade on hover */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="#" class="navbar-brand">PiChess</a>
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="#" class="nav-link">Play Online</a></li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Play with Computer</a>
+          </li>
+          <li class="nav-item"><a href="#" class="nav-link">Create Game</a></li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Contact Support</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <!-- Options Section -->
+        <div class="col-md-6">
+          <h2>Choose an Option</h2>
+          <ul>
+            <li><a href="#" class="btn-solve">Play Online</a></li>
+            <li><a href="#" class="btn-solve">Play with Computer</a></li>
+            <li><a href="#" class="btn-solve">Create Game</a></li>
+            <!-- Add more options as needed -->
+          </ul>
+        </div>
+        <!-- Chess Puzzle of the Day Section -->
+        <div class="col-md-6">
+          <h2>Chess Puzzle of the Day</h2>
+          <div class="chess-board">
+            <!-- Chessboard image or interactive chessboard (if using JavaScript) goes here -->
+          </div>
+          <p>Description or title of the puzzle goes here.</p>
+          <button class="btn-solve">Solve</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

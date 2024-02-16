@@ -31,9 +31,8 @@
             align-items: center;
             font-family: "Exo 2", sans-serif;
             color: #bababa;
-            /* background: rgb(22, 21, 18) linear-gradient(rgb(46, 42, 36), rgb(22, 21, 18) 116px) no-repeat scroll 0% 0% / auto padding-box border-box; */
             background-color: var(--body-color);
-            z-index: 0;
+            /* z-index: 0; */
         }
 
         .board,
@@ -60,19 +59,19 @@
         .options {
             background-color: darkcyan;
             cursor: pointer;
-            z-index: 2;
+            /* z-index: 2; */
         }
 
         .square {
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1;
+            /* z-index: 1; */
         }
 
         .piece {
             cursor: pointer;
-            z-index: 2;
+            /* z-index: 2; */
             width: 4.46vw;
         }
 
@@ -258,9 +257,12 @@
         .highlight-circle {
             border-radius: 50%;
             background-color: rgba(0, 139, 139, 0.363);
-            position: absolute;
+            /* z-index: 3; */
+            width: 16px;
+            height: 16px;
             display: none;
-            z-index: 3;
+            align-self: center;
+            justify-self: center;
             cursor: pointer;
         }
 
@@ -313,10 +315,14 @@
             min-width: 35vw;
             display: none;
         }
+        .game-details>div{
+            margin-bottom: 3%;
+        }
 
         .levels {
             display: flex;
             width: 80%;
+            box-shadow: 1px 1px 0px #555;
         }
 
         .level {
@@ -328,7 +334,7 @@
             margin: 0 0vw;
             cursor: pointer;
             background-color: var(--body-color);
-            border-right: 1px solid grey;
+            border-right: 1px solid rgb(100, 95, 95);
             background-color: #333;
         }
 
@@ -343,7 +349,6 @@
         .active-level:hover {
             background-color: var(--active-color);
         }
-
 
         .button {
             background-color: var(--active-color);
@@ -407,7 +412,7 @@
             opacity: 0.3;
             align-self: center;
             justify-self: center;
-            z-index: 0;
+            /* z-index: 0; */
         }
 
         .save-game {
@@ -441,7 +446,209 @@
             display: none;
         }
 
+        .light-square {
+            background-color: white;
+
+        }
+
+        .dark-square {
+            background-color: rgb(184, 139, 74);
+
+        }
+
+        .check-square {
+            background-color: orangered;
+        }
+
+
+        .start-square {
+            background-color: grey;
+            background-color: rgb(156, 126, 50);
+        }
+
+        .target-square {
+            background-color: dimgrey;
+            background-color: rgb(156, 126, 50);
+        }
+
+        .colored-square {
+            background-color: rgb(160, 120, 10);
+            background-color: orange;
+        }
+
+        .odd-colored-square {
+            background-color: rgb(160, 120, 10);
+            background-color: rgb(98, 165, 220);
+        }
+
+        .even-colored-square {
+            background-color: rgb(160, 110, 17);
+            background-color: rgb(88, 143, 188);
+        }
+
+        .click-square {
+            background-color: rgb(156, 120, 50);
+        }
+
+
+        .winner-symbol {
+            position: absolute;
+            color: gold;
+            font-weight: bold;
+            font-size: large;
+
+        }
+
+        .loser-symbol {
+            position: absolute;
+            color: black;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .gameover-box-wrapper {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .gameover-box {
+            padding: 0.5%;
+            display: flex;
+            flex-direction: column;
+            background-color: #222;
+            justify-content: center;
+            align-items: center;
+            width: 30vw;
+            border-radius: 5px;
+            box-shadow: 0px 0px 3px grey;
+        }
+
+
+        .result-title {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: x-large;
+        }
+
+        .winner-name {
+            color: gold;
+        }
+
+        .win-reason {
+            font-size: small;
+        }
+
+        .gameover-box>div {
+            margin-bottom: 5%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .player-icons {
+            display: flex;
+        }
+
+        .player-icon {
+            font-size: xx-large;
+
+        }
+
+
+        .chess-side {
+            border: 3px solid grey;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            border-radius: 8px;
+            margin: 0 5%;
+            padding: 3%;
+            cursor: pointer;
+            transition: 0.5s;
+            min-width: 30%;
+
+        }
+
+
+        .winner {
+            border: 3px solid dodgerblue;
+
+
+        }
+
+        .winner:hover {
+            scale: 1.05;
+        }
+
+        .loser {
+            border: 3px solid red;
+        }
+
+        .loser:hover {
+            scale: 1.05;
+
+        }
+
+
+        .name {
+            color: grey;
+            font-size: small;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .analysis-options {
+            color: white;
+            display: flex;
+            flex-direction: row;
+
+        }
+
+        .analysis-options>div {
+
+            padding: 1%;
+            cursor: pointer;
+            text-align: center;
+            margin: 0 1%;
+            width: 35%;
+            border-radius: 3px;
+        }
+
+        .analyse {
+            background-color: dodgerblue;
+        }
+
+        .close {
+            background-color: gray;
+        }
+
+        .mini-logo {
+            padding: 1%;
+            font-size: xx-large;
+            background-color: #333;
+        }
+
+
+
+
+
         @media screen and (max-width: 800px) {
+            .gameover-box {
+                min-width: 90vw;
+            }
+
             body {
                 flex-direction: column;
             }
@@ -453,7 +660,6 @@
 
             .piece {
                 width: 12.255vw;
-
             }
 
             .second-board {
@@ -578,21 +784,56 @@
 </head>
 
 <body>
+
+    <!-- Gmeover dialog box -->
+
+
+    <div class="gameover-box-wrapper">
+
+        <div class="gameover-box">
+            <div class="mini-logo"><i class="fas fa-chess"></i> PiChess</div>
+            <div class="result-title">
+                <div class="winner-name"></i></div>
+                <div class="win-reason"></div>
+
+            </div>
+            <div class="player-icons">
+                <div class="my-side chess-side">
+                    <i class=" player-icon fas fa-user"></i>
+                    <div class="name">Guest</div>
+                </div>
+                <div class="opposite-side chess-side">
+                    <i class="player-icon fas fa-cog"></i>
+                    <div class="name">Computer</div>
+                </div>
+            </div>
+
+            <div class="analysis-options">
+                <div class="close" onclick="closeGameoverBoxDialog()">Close</div>
+                <div class="analyse">Analyse</div>
+            </div>
+
+        </div>
+    </div>
+
     <div class="game-details">
         <div class="title">
             <h2>Play Computer</h2>
         </div>
-        <div class="select-side subtitle">Select Color</div>
         <div class="sides">
             <div class="side fas fa-chess-king active-side" style="color: white"></div>
             <div class="side fas fa-chess-king" style="color: black"></div>
         </div>
-        <div class="subtitle">Select Depth</div>
+        <div class="subtitle">Strength</div>
         <div class="levels">
-            <div class="level active-level">1</div>
+            <div class="level">1</div>
             <div class="level">2</div>
             <div class="level">3</div>
-            <div class="level">4</div>
+            <div class="level active-level">4</div>
+            <div class="level">5</div>
+            <div class="level">6</div>
+            <div class="level">7</div>
+            <div class="level">8</div>
         </div>
         <div style="display: flex; justify-content: center; align-items: center">
             <div class="button cancel-computer-button">cancel</div>
@@ -601,7 +842,7 @@
     </div>
     <div class="navbar">
         <div class="nav-element logo">
-            <h2>PiChess</h2>
+            <h2> <i class="fas fa-chess"></i>PiChess</h2>
         </div>
         <div class="nav-element">Play</div>
         <div class="nav-element">Learn</div>
@@ -619,7 +860,8 @@
                 <i class="fas fa-bars"></i>
             </div>
         </div>
-        <div id="chessBoard"></div>
+        <div id="chessBoard">
+        </div>
 
         <div class="player-name-mobile">
             <div class="name">
@@ -672,9 +914,10 @@
     </div>
 </body>
 <script>
+
     var socket = io("/play-computer");
 
-    let Depth = 1;
+    let Depth = 4;
     let moveSound = new Audio("/sound-effects/lichess-move.ogg");
     let captureSound = new Audio("/sound-effects/lichess-capture.ogg");
     let background = new Audio("/sound-effects/background.mp3");
@@ -692,7 +935,6 @@
     //making chess board
     let chessboard = document.getElementById("chessBoard");
 
-
     var perspective = 1;
     var str;
     var board;
@@ -704,17 +946,17 @@
         str = perspective == 1 ? str1 : str2;
 
         board = generateLightBoard(str);
-        dummy(board);
+        putPieceOnBoard(board);
     }
 
     let chessPieces = document.getElementsByClassName("piece");
-    // createCirclesOnSquares();
+    createCirclesOnSquares();
     let squares = document.getElementsByClassName("square");
     var turn = perspective;
     var moveCount = 1;
     var boards = [];
     var moveTypes = [];
-    boards.push(board)
+    boards.push(board);
     var pointer = 0;
     //initial indices of kings
     var indexOfWhiteKing = FindIndexOfWhiteKing(str);
@@ -728,7 +970,7 @@
     socket.emit("fetch-data-request", { url: window.location.href });
     socket.on("fetch-data-responce", (data) => {
         if (data && data.board != undefined) {
-            board = data.board;
+            board = Object.values(data.board);
             turn = data.turn;
             Depth = data.depth;
             moveCount = data.moveCount;
@@ -843,8 +1085,9 @@
             document.getElementsByClassName("save-game")[0].style.display = "flex";
             document.getElementsByClassName("rematch")[0].style.display = "flex";
             gameEnd.play();
-            printResult("Black won", "Resignation");
-            sendDataToServer();
+            document.getElementsByClassName('board')[0].style.pointerEvents = 'none';
+            printResult(true, "Black", "Resignation")
+
         } else {
             resignButton.classList.add("active-action");
             let ht = resignButton.innerHTML;
@@ -858,7 +1101,6 @@
             drawButton.classList.remove("disabled");
             drawButton.classList.add("enabled");
             if (drawButton.classList.contains("active-action")) {
-                console.log("offer draw");
             } else {
                 drawButton.classList.add("active-action");
                 setTimeout(() => {
@@ -873,11 +1115,11 @@
             document.getElementsByClassName("save-game")[0].style.display = "flex";
 
             removeActions();
-            moveRecape();
             document.getElementsByClassName("rematch")[0].style.display = "flex";
             gameEnd.play();
-            printResult("Game Aborted", "white");
-            sendDataToServer();
+            chessboard.pointerEvents = 'none';
+
+            printResult(false, "Aborted")
         } else {
             abortButton.classList.add("active-action");
             setTimeout(() => {
@@ -886,7 +1128,6 @@
         }
     });
     rematchButton.addEventListener("click", (e) => {
-        window.location.href = "/play-computer";
         socket.emit("new-game-request", null);
         socket.on("new-game-responce", (url) => {
             window.location.href = url;
@@ -898,7 +1139,6 @@
     let enPassantForBlack = [false, -1];
     let whiteCastle = [true, true];
     let blackCastle = [true, true];
-
 
     let legal = [];
     let moveActive = [false, -1];
@@ -912,24 +1152,24 @@
     }
 
     function createBoard() {
-        let square = document.createElement("div");
         for (let i = 1; i <= 8; i++) {
             for (let j = 1; j <= 8; j++) {
+                let square = document.createElement("div");
                 square.classList.add("square");
                 square.style.gridRowStart = i;
                 square.style.gridColumnStart = j;
 
                 if ((j + i) % 2 == 0) {
-                    square.style.backgroundColor = light;
+                    square.classList.add("light-square");
                 } else {
-                    square.style.backgroundColor = dark;
+                    square.classList.add('dark-square');
                 }
                 chessboard.appendChild(square.cloneNode(true));
             }
         }
     }
 
-    function dummy(board) {
+    function putPieceOnBoard(board) {
         //creating elements
         let piece = document.createElement("img");
 
@@ -948,26 +1188,14 @@
 
     //to highlight moves i put small circles on each square
     function createCirclesOnSquares() {
-        let rect = chessboard.getBoundingClientRect();
-        let top = rect.top;
-        let left = rect.left;
 
         for (let i = 0; i < 64; i++) {
-            let circle = document.createElement("div");
-            circle.classList.add("highlight-circle");
-            let circleWidth = 16;
-            circle.style.width = circleWidth + "px";
-            circle.style.height = circleWidth + "px";
-            circle.style.left = `${left + (i % 8) * (width / 8) + width / 16 - circleWidth / 2
-                }px`;
-            circle.style.top = `${top + Math.floor(i / 8) * (width / 8) + width / 16 - circleWidth / 2
-                }px`;
-            document.body.appendChild(circle);
-            //allowing the click though this circle
-            circle.addEventListener("click", (e) => {
-                humanMove(board, i, turn);
-            });
-            dragAndDrop(circle, i, turn);
+            let circle = document.createElement('div');
+            circle.classList.add('highlight-circle');
+            circle.style.gridColumnStart = i % 8 + 1;
+            circle.style.gridRowStart = Math.floor(i / 8) + 1;
+
+            chessboard.appendChild(circle)
         }
     }
 
@@ -1020,62 +1248,10 @@
                 promotionMoveForBlack(index);
                 return;
             } else {
-                let type = MoveType(board, moveActive[1], index);
-                if (turn == 1) moveCount++;
-                addMoveToAnalysisBoard(board, moveActive[1], index, 10);
-                playMove(board, moveActive[1], index, 10);
-                boards.push(board)
-                moveTypes.push(type);
-                pointer++;
-                let oppositeLegalMoves = allLegalMoves(board, -color);
-                let len = oppositeLegalMoves.length;
-
-                let check = false;
-
-                if (isUnderCheck(board, -color)) {
-                    check = true;
-                    if (len == 0) {
-                        gameOver = true;
-                    }
-
-                    type = "check";
-                }
-
-                //
-                playSoundEffects(type);
-
-                refreshBoard(board, moveActive[1], index);
-
-                unHightlight();
-                legal = [];
-                moveActive[0] = false;
-                highlightLastMove(index, moveActive[1]);
-                if (check) checkKingIndex(-color);
-                if (gameOver) {
-                    removeActions();
-                    moveRecape();
-                    document.getElementsByClassName("save-game")[0].style.display =
-                        "flex";
-
-                    document.getElementsByClassName("rematch")[0].style.display =
-                        "flex";
-                    setTimeout(() => {
-                        gameEnd.play();
-
-                        if (turn == 1) printResult("White won", "Checkmate");
-                        else {
-                            printResult("Black won", "Checkmate");
-                        }
-                    }, 1000);
-                }
-                changeTurn();
-                sendDataToServer();
-                enableOptions();
+                MakeMove(board, moveActive[1], index, 10);
                 setTimeout(() => {
-                    if (turn == -perspective) {
-                        gameEngine(board, -perspective);
-                        if (gameOver) turn = 0;
-                    }
+                    gameEngine(board, -perspective);
+                    if (gameOver) turn = 0;
                 }, 10);
             }
         }
@@ -1118,53 +1294,8 @@
                 else flag = 3;
                 removeOptions();
                 if (turn == 1) moveCount++;
-                let type = MoveType(board, moveActive[1], index);
-                addMoveToAnalysisBoard(board, moveActive[1], index, flag);
-                playMove(board, moveActive[1], index, flag);
-                boards.push(board)
-                moveTypes.push(type);
+                MakeMove(board, moveActive[1], index, flag);
 
-                pointer++;
-
-                let oppositeLegalMoves = allLegalMoves(board, -turn);
-                let len = oppositeLegalMoves.length;
-                let check = false;
-                if (isUnderCheck(board, -turn)) {
-                    if (len == 0) gameOver = true;
-                    check = true;
-                    type = "check";
-                }
-
-                //
-                playSoundEffects(type);
-                refreshBoard(board, moveActive[1], index);
-                unHightlight();
-                legal = [];
-                moveActive[0] = false;
-                highlightLastMove(index, moveActive[1]);
-                if (check) checkKingIndex(-turn);
-                if (gameOver) {
-                    removeActions();
-                    moveRecape();
-                    document.getElementsByClassName("save-game")[0].style.display =
-                        "flex";
-
-                    document.getElementsByClassName("rematch")[0].style.display =
-                        "flex";
-
-                    setTimeout(() => {
-                        gameEnd.play();
-
-                        if (turn == 1) printResult("White won", "Checkmate");
-                        else {
-                            printResult("Black won", "Checkmate");
-                        }
-                    }, 1000);
-                }
-
-                changeTurn();
-                sendDataToServer();
-                enableOptions();
                 return;
             });
         }
@@ -1198,50 +1329,7 @@
                 removeOptions();
 
                 if (turn == 1) moveCount++;
-                let type = MoveType(board, moveActive[1], index);
-                addMoveToAnalysisBoard(board, moveActive[1], index, flag);
-                playMove(board, moveActive[1], index, flag);
-                boards.push(board)
-                moveTypes.push(type);
-
-                pointer++;
-
-                let oppositeLegalMoves = allLegalMoves(board, -turn);
-                let len = oppositeLegalMoves.length;
-                let check = false;
-                if (isUnderCheck(board, -turn)) {
-                    check = true;
-                    if (len == 0) gameOver = true;
-                    type = "check";
-                }
-                playSoundEffects(type);
-                refreshBoard(board, moveActive[1], index);
-                unHightlight();
-                legal = [];
-                moveActive[0] = false;
-                highlightLastMove(index, moveActive[1]);
-                if (check) checkKingIndex(-turn);
-                if (gameOver) {
-                    setTimeout(() => {
-                        removeActions();
-                        moveRecape();
-                        document.getElementsByClassName("save-game")[0].style.display =
-                            "flex";
-
-                        document.getElementsByClassName("rematch")[0].style.display =
-                            "flex";
-                        gameEnd.play();
-
-                        if (turn == 1) printResult("White won", "Checkmate");
-                        else {
-                            printResult("Black won", "Checkmate");
-                        }
-                    }, 1000);
-                }
-
-                changeTurn();
-                sendDataToServer();
-                enableOptions();
+                MakeMove(board, moveActive[1], index, flag);
                 return;
             });
         }
@@ -1307,7 +1395,7 @@
         }
     }
 
-    /*Alpha beta search*/
+    /*Alpha Beta search*/
 
     function alphaBetaSearch(board, color, depth, alpha, beta, index) {
         if (depth == 0) {
@@ -1363,6 +1451,8 @@
         }
         return [alpha, index];
     }
+
+
 
     //Generalized maps for the pieces
     var whitePawnMap = [
@@ -1603,46 +1693,70 @@
     }
 
     function highlight(moves, index) {
-        // document.getElementsByClassName('square')[index].style.backgroundColor = 'rgba(255,200,0,0.7)'
-        // let circles = document.getElementsByClassName('highlight-circle')
-        // for (let i = 0; i < moves.length; i++) {
-        //     circles[moves[i]].style.display = 'block'
-        // }
+
+        document.getElementsByClassName('square')[index].classList.add('click-square')
+        let count = 0;
+        for (move of moves) {
+            if (count % 2 == 0) {
+                document.getElementsByClassName('square')[move].classList.add('even-colored-square')
+
+            }
+            else {
+                document.getElementsByClassName('square')[move].classList.add('odd-colored-square')
+
+            }
+            count++;
+        }
     }
 
     function unHightlight() {
-        let circle = document.getElementsByClassName("highlight-circle");
-        for (let i = 0; i < circle.length; i++) {
-            circle[i].style.display = "none";
+
+        let clickSquare = document.getElementsByClassName('click-square');
+        if (clickSquare.length) {
+            clickSquare[0].classList.remove('click-square')
         }
+
+        let circles = document.getElementsByClassName('highlight-circle')
+        for (let i = 0; i < circles.length; i++) {
+            circles[i].style.display = 'none'
+        }
+
+        let squares = document.getElementsByClassName('square')
+
         for (let i = 0; i < 64; i++) {
-            let x = i % 8;
-            let y = Math.floor(i / 8);
-            if ((x + y) % 2 == 0) {
-                document.getElementsByClassName("square")[i].style.backgroundColor =
-                    light;
-            } else {
-                document.getElementsByClassName("square")[i].style.backgroundColor =
-                    dark;
-            }
+            squares[i].classList.remove('odd-colored-square')
+            squares[i].classList.remove('even-colored-square')
         }
+
+
     }
 
     function highlightLastMove(initial, final) {
-        document.getElementsByClassName("square")[initial].style.backgroundColor =
-            "rgb(180,203,99)";
-        document.getElementsByClassName("square")[final].style.backgroundColor =
-            "rgb(180,203,99)";
+        let prev1 = document.getElementsByClassName('start-square')
+        let prev2 = document.getElementsByClassName('target-square')
+        if (prev1.length && prev2.length) {
+            prev1[0].classList.remove('start-square')
+            prev2[0].classList.remove('target-square')
+        }
+
+        let checkSquare = document.getElementsByClassName('check-square')
+        if (checkSquare.length) {
+
+            checkSquare[0].classList.remove('check-square')
+        }
+
+        document.getElementsByClassName('square')[initial].classList.add('start-square');
+        document.getElementsByClassName('square')[final].classList.add('target-square');
     }
     function checkKingIndex(color) {
         if (color == 1) {
             document.getElementsByClassName("square")[
                 indexOfWhiteKing
-            ].style.backgroundColor = "orangered";
+            ].classList.add('check-square');
         } else {
             document.getElementsByClassName("square")[
                 indexOfBlackKing
-            ].style.backgroundColor = "orangered";
+            ].classList.add('check-square');
         }
     }
 
@@ -1650,7 +1764,6 @@
 
     function dragAndDrop(element, index, color) {
         element.addEventListener("dragstart", (e) => {
-            console.log("dragged");
             e.dataTransfer.setData("text/plain", index);
             legal = finalLegalMoves(board, index, turn);
             highlight(legal, index);
@@ -1665,51 +1778,7 @@
         element.addEventListener("drop", (e) => {
             if (legal.includes(index)) {
                 if (turn == 1) moveCount++;
-                let type = MoveType(board, moveActive[1], index);
-                addMoveToAnalysisBoard(board, moveActive[1], index, 10);
-                playMove(board, moveActive[1], index, 10);
-                boards.push(board)
-                moveTypes.push(type);
-                pointer++;
-                let oppositeLegalMoves = allLegalMoves(board, -color);
-                let len = oppositeLegalMoves.length;
-                let check = false;
-                if (isUnderCheck(board, -color)) {
-                    check = true;
-                    if (len == 0) gameOver = true;
-                    type = "check";
-                }
-
-                //
-                playSoundEffects(type);
-                refreshBoard(board, moveActive[1], index);
-                unHightlight();
-                highlightLastMove(index, moveActive[1]);
-                if (check) checkKingIndex(-turn);
-                legal = [];
-                if (gameOver) {
-                    setTimeout(() => {
-                        removeActions();
-                        moveRecape();
-                        document.getElementsByClassName("save-game")[0].style.display =
-                            "flex";
-
-                        document.getElementsByClassName("rematch")[0].style.display =
-                            "flex";
-                        // localStorage.setItem('previousBoard',null)
-
-                        gameEnd.play();
-
-                        if (turn == 1) printResult("White won", "Checkmate");
-                        else {
-                            printResult("Black won", "Checkmate");
-                        }
-                    }, 1000);
-                }
-
-                changeTurn();
-                sendDataToServer();
-                enableOptions();
+                MakeMove(board, moveActive[1], index, 10);
                 setTimeout(() => {
                     if (turn == -perspective) {
                         gameEngine(board, -perspective);
@@ -2288,6 +2357,8 @@
         }
     }
 
+
+
     function refreshBoard(board, initial, final) {
         for (let i = 0; i < 64; i++) {
             if (board[i] == 0) {
@@ -2320,7 +2391,6 @@
     //Main Game Engine(New optimized,fast and powerful)
 
     function gameEngine(board, color) {
-        console.log("Engine starting.../");
 
         let depth = Depth;
         let index = alphaBetaSearch(
@@ -2331,56 +2401,11 @@
             +Infinity,
             []
         )[1];
-        console.log("search completed");
-        console.log("Best Moves", index);
         let rand = Math.round((index.length - 1) * Math.random());
         let [initial, final, flag] = index[rand];
-        console.log("played Move", [initial, final, flag]);
         //ACTUALLY PLAYING MOVE
         if (turn == 1) moveCount++;
-        let type = MoveType(board, initial, final);
-        addMoveToAnalysisBoard(board, initial, final, flag);
-        playMove(board, initial, final, flag);
-        boards.push(board)
-        moveTypes.push(type);
-        pointer++;
-        let oppositeLegalMoves = allLegalMoves(board, -color);
-        let len = oppositeLegalMoves.length;
-        let check = false;
-        if (isUnderCheck(board, -color)) {
-            check = true;
-            if (len == 0) gameOver = true;
-            type = "check";
-        }
-
-        //
-        playSoundEffects(type);
-        refreshBoard(board, initial, final);
-
-        //highlighting the prevoius move (engine plays a bit fast)
-        unHightlight();
-        highlightLastMove(initial, final);
-        if (check) checkKingIndex(-turn);
-
-        if (gameOver) {
-            setTimeout(() => {
-                removeActions();
-                moveRecape();
-                document.getElementsByClassName("save-game")[0].style.display =
-                    "flex";
-
-                document.getElementsByClassName("rematch")[0].style.display = "flex";
-
-                gameEnd.play();
-
-                if (turn == 1) printResult("White won", "Checkmate");
-                else {
-                    printResult("Black won", "Checkmate");
-                }
-            }, 1000);
-        }
-        changeTurn();
-        sendDataToServer();
+        MakeMove(board, initial, final, flag);
     }
 
     //sound effects
@@ -2818,11 +2843,9 @@
         document
             .getElementsByClassName("analysis-board-mobile")[0]
             .appendChild(moveDiv.cloneNode(true));
-        // document.getElementsByClassName('analysis-board-mobile')[0].appendChild(moveDiv.cloneNode(true))
-        //scroll the ananlyssi board to end
+
         let scrollContainer =
             document.getElementsByClassName("analysis-board")[0];
-        // let scrollContainerMobile = document.getElementsByClassName('analysis-board-mobile')[0]
         scrollContainer.scrollTop = scrollContainer.scrollHeight;
     }
 
@@ -3031,45 +3054,46 @@
             let filename = date;
             downloadGame(filename);
         });
-    //function to print the result of the game //
 
-    function printResult(name, reason) {
-        let resultDiv = document.createElement("div");
-        resultDiv.classList.add("show-result");
-        let crossButton = document.createElement("div");
-        crossButton.classList.add("cross-button");
-        crossButton.innerHTML = "OK";
-        let textDiv = document.createElement("div");
-        textDiv.classList.add("text-div");
-        textDiv.innerHTML = name;
 
-        resultDiv.appendChild(textDiv.cloneNode(true));
-        textDiv.innerHTML = "(By " + reason + ")";
-        resultDiv.appendChild(textDiv);
-        resultDiv.appendChild(crossButton);
-        document.body.appendChild(resultDiv);
-        document.getElementsByClassName("board")[0].style.pointerEvents = "none";
-        document.getElementsByClassName("second-board")[0].style.pointerEvents =
-            "none";
-        document.getElementsByClassName("board")[0].style.opacity = "0.3";
-        document.getElementsByClassName("second-board")[0].style.opacity = "0.3";
-        crossButton.addEventListener("click", (e) => {
-            resultDiv.remove();
+    function printResult(resultFlag, name, reason) {
+        if (resultFlag) {
+            /*some one won the game*/
+            document.getElementsByClassName('winner-name')[0].innerHTML = `${name} wins <i class="fas fa-trophy"></i>`;
+            document.getElementsByClassName('win-reason')[0].innerHTML = `(${reason})`
 
-            document.getElementsByClassName("board")[0].style.opacity = "1";
-            document.getElementsByClassName("second-board")[0].style.opacity = "1";
-            // document.getElementsByClassName('board')[0].style.pointerEvents = 'auto'
-            document.getElementsByClassName("second-board")[0].style.pointerEvents =
-                "auto";
-        });
+            if (name == 'White') {
+                document.getElementsByClassName('my-side')[0].classList.add('winner');
+                document.getElementsByClassName('opposite-side')[0].classList.add('loser');
+            }
+            else {
+                document.getElementsByClassName('my-side')[0].classList.add('loser');
+                document.getElementsByClassName('opposite-side')[0].classList.add('winner');
+
+            }
+        }
+
+        else {
+            if (name == "Draw") {
+
+                document.getElementsByClassName('winner-name')[0].innerHTML = `Draw  <i class="fas fa-balance-scale"></i>`;
+                document.getElementsByClassName('win-reason')[0].innerHTML = `(${reason})`
+            }
+            else {
+
+                document.getElementsByClassName('winner-name')[0].innerHTML = `Aborted <i class="fas fa-balance-scale"></i>`;
+            }
+
+        }
+
+        document.getElementsByClassName('gameover-box-wrapper')[0].style.display = 'flex';
+
     }
 
     //function for enabling options
     function enableOptions() {
         document.getElementsByClassName("resign")[0].classList.remove("disabled");
         document.getElementsByClassName("resign")[0].classList.add("enabled");
-        //  document.getElementsByClassName('draw')[0].classList.remove('disabled')
-        // document.getElementsByClassName('draw')[0].classList.add('enabled')
         document.getElementsByClassName("abort")[0].classList.remove("enabled");
         document.getElementsByClassName("abort")[0].classList.add("disabled");
         document.getElementsByClassName("abort")[0].style.pointerEvents = "none";
@@ -3104,8 +3128,6 @@
         socket.emit("save-board-data", JSON.stringify(obj));
     }
 
-
-
     function getGameData() {
         let moves = document.getElementsByClassName("move");
         let moveSerial = document.getElementsByClassName("number-div");
@@ -3128,7 +3150,6 @@
     function downloadGame(filename) {
         // Assuming 'yourFileContent' is the content of your .pgn file
         let date = new Date();
-        console.log(date.getDate());
         var heading = `[Event "Unratted PiChess Match"]\n[Date: "${date}"]\n[White "Player Anonymous"]\n[Black "Computer(depth ${Depth})"]\n\n`;
         var gameContent = heading + getGameData();
 
@@ -3144,18 +3165,100 @@
     }
 
     function addTransitionToMove(board, initial, final) {
-        let rect1 = chessPieces[initial].getBoundingClientRect()
-        let rect2 = chessPieces[final].getBoundingClientRect()
+        let rect1 = chessPieces[initial].getBoundingClientRect();
+        let rect2 = chessPieces[final].getBoundingClientRect();
 
-        let x1 = rect1.left, y1 = rect1.top;
-        let x2 = rect2.left, y2 = rect2.top;
-        console.log(x1, y1, x2, y2)
+        let x1 = rect1.left,
+            y1 = rect1.top;
+        let x2 = rect2.left,
+            y2 = rect2.top;
 
-        chessPieces[initial].style.position = "absolute"
+        chessPieces[initial].style.position = "absolute";
 
-        chessPieces[initial].style.left = x1 + 'px';
-        chessPieces[initial].style.top = y1 + 'px';
+        chessPieces[initial].style.left = x1 + "px";
+        chessPieces[initial].style.top = y1 + "px";
     }
+
+    function MakeMove(board, initial, final, flag) {
+        let type = MoveType(board, initial, final);
+        if (turn == 1) moveCount++;
+        addMoveToAnalysisBoard(board, initial, final, 10);
+        playMove(board, initial, final, 10);
+        boards.push(board);
+        moveTypes.push(type);
+        pointer++;
+        let oppositeLegalMoves = allLegalMoves(board, -turn);
+        let len = oppositeLegalMoves.length;
+
+        let check = false;
+
+        if (isUnderCheck(board, -turn)) {
+            check = true;
+            if (len == 0) {
+                gameOver = true;
+            }
+
+            type = "check";
+        }
+
+        //
+        playSoundEffects(type);
+
+        refreshBoard(board, initial, final);
+
+        unHightlight();
+        legal = [];
+        moveActive[0] = false;
+        highlightLastMove(initial, final);
+        if (check) checkKingIndex(-turn);
+        if (gameOver) {
+            removeActions();
+            moveRecape();
+
+            document.getElementsByClassName("save-game")[0].style.display = "flex";
+
+            document.getElementsByClassName("rematch")[0].style.display = "flex";
+            setTimeout(() => {
+                gameEnd.play();
+
+                if (turn == 1) {
+                    printResult(true, "White", "Checkmate");
+                    chessboard.pointerEvents = 'none';
+
+                }
+                else {
+                    printResult(true, "Black", "Checkmate");
+                    chessboard.pointerEvents = 'none';
+
+                }
+            }, 1000);
+        }
+        changeTurn();
+        sendDataToServer();
+        enableOptions();
+    }
+
+    function createGameoverSymbol(winnerIndex, loserIndex) {
+        let div1 = document.createElement('div');
+        div1.innerHTML = '<i class="fas fa-crown"></i>'
+        div1.style.gridColumnStart = winnerIndex % 8 + 1;
+        div1.style.gridRowStart = Math.floor(winnerIndex / 8) + 1;
+        div1.classList.add('winner-symbol')
+        chessboard.appendChild(div1)
+
+        let div2 = document.createElement('div');
+        div2.classList.add('loser-symbol')
+        div2.innerHTML = '#'
+        div2.style.gridColumnStart = loserIndex % 8 + 1;
+        div2.style.gridRowStart = Math.floor(loserIndex / 8) + 1;
+        chessboard.appendChild(div2)
+    }
+
+    function closeGameoverBoxDialog() {
+        document.getElementsByClassName('gameover-box-wrapper')[0].style.display = 'none';
+    }
+
+
 </script>
 
 </html>

@@ -13,8 +13,8 @@ const helper_functions = require("./helper_functions");
 
 app.use(bodyParser.json());
 app.use(express.static("public"));
-app.get("/file", (req, res) => {
-  res.sendFile(__dirname + "/public/index2.html");
+app.get("/signup", (req, res) => {
+  res.sendFile(__dirname + "/public/signup.html");
 });
 
 /**Main */

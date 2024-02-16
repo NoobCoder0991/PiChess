@@ -1143,9 +1143,6 @@
                 sendDataToServer()
                 enableOptions()
                 gameEngine(board, -perspective)
-                    .then(val => {
-                        changeTurn()
-                    })
             }
         }
     }
@@ -2520,57 +2517,62 @@
         }
 
     }
+    function fetchMoveFromStockfish(board, color) {
+        socket.on('fetch-move-responce', (data) => {
+            let initial = data.startIndex, final = data.targetIndex, flag = data.flag;
+            // ACTUALLY PLAYING MOVE
+            if (turn == 1) moveCount++;
+            let type = MoveType(board, initial, final);
+            addMoveToAnalysisBoard(board, initial, final, flag);
+            playMove(board, initial, final, flag);
+            boards.push([...board]);
+            moveTypes.push(type);
+            pointer++;
+            let oppositeLegalMoves = allLegalMoves(board, -color);
+            let len = oppositeLegalMoves.length;
+            let check = false;
+            if (isUnderCheck(board, -color)) {
+                check = true;
+                if (len == 0) gameOver = true;
+                type = 'check';
+            }
+
+            playSoundEffects(type);
+            refreshBoard(board, initial, final);
+
+            // Highlighting the previous move (engine plays a bit fast)
+            highlightLastMove(initial, final);
+            if (check) checkKingIndex(-turn);
+
+            if (gameOver) {
+                setTimeout(() => {
+                    removeActions();
+                    moveRecape();
+                    document.getElementsByClassName('save-game')[0].style.display = 'flex';
+                    document.getElementsByClassName('rematch')[0].style.display = 'flex';
+                    gameEnd.play();
+                    if (turn == 1) printResult('White won', 'Checkmate');
+                    else {
+                        printResult('Black won', 'Checkmate');
+                    }
+                }, 1000);
+            }
+            sendDataToServer();
+
+            changeTurn();
+
+        });
+
+    }
     //Main Game Engine(New optimized,fast and powerful)
+    fetchMoveFromStockfish(board, turn)
     function gameEngine(board, color) {
+
         let depth = Depth;
 
-        // Wrapping socket.on in a Promise
-        return new Promise((resolve, reject) => {
-            socket.emit('fetch-move', { fen: boardToFen(board, color), depth: 15 });
-            socket.on('fetch-move-responce', (data) => {
-                let initial = data.startIndex, final = data.targetIndex, flag = data.flag;
-                // ACTUALLY PLAYING MOVE
-                if (turn == 1) moveCount++;
-                let type = MoveType(board, initial, final);
-                addMoveToAnalysisBoard(board, initial, final, flag);
-                playMove(board, initial, final, flag);
-                boards.push([...board]);
-                moveTypes.push(type);
-                pointer++;
-                let oppositeLegalMoves = allLegalMoves(board, -color);
-                let len = oppositeLegalMoves.length;
-                let check = false;
-                if (isUnderCheck(board, -color)) {
-                    check = true;
-                    if (len == 0) gameOver = true;
-                    type = 'check';
-                }
 
-                playSoundEffects(type);
-                refreshBoard(board, initial, final);
+        socket.emit('fetch-move', { fen: boardToFen(board, color), depth: 20 });
 
-                // Highlighting the previous move (engine plays a bit fast)
-                highlightLastMove(initial, final);
-                if (check) checkKingIndex(-turn);
-
-                if (gameOver) {
-                    setTimeout(() => {
-                        removeActions();
-                        moveRecape();
-                        document.getElementsByClassName('save-game')[0].style.display = 'flex';
-                        document.getElementsByClassName('rematch')[0].style.display = 'flex';
-                        gameEnd.play();
-                        if (turn == 1) printResult('White won', 'Checkmate');
-                        else {
-                            printResult('Black won', 'Checkmate');
-                        }
-                    }, 1000);
-                }
-                sendDataToServer();
-
-                resolve(1);
-            });
-        });
     }
 
 
