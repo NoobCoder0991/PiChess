@@ -16,14 +16,13 @@
       @import url("https://fonts.googleapis.com/css2?family=Exo+2&display=swap");
 
       @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Exo+2&display=swap");
 
       :root {
-        --body-color: #181818; /* Dark background color */
+        --body-color: #262421;
         --active-color: #629924;
-        --dark-color: #333; /* Dark text color */
-        --light-color: #fff; /* Light text color */
-        --special-light-color: #262626; /* Special light color */
+        --dark-color: #333;
+        --light-color: #fff;
+        --special-light-color: #f2f2f2;
       }
 
       *::-webkit-scrollbar {
@@ -47,24 +46,21 @@
         font-style: normal;
         height: 100vh;
         overflow: scroll;
-        background-color: var(--body-color); /* Set dark background */
-        color: var(--light-color); /* Set light text color */
       }
 
       header {
-        background-color: var(--dark-color); /* Dark header background */
+        background-color: var(--dark-color);
         color: var(--light-color);
         height: 10vh;
         padding: 0 1vw;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        /* width: 100%; */
       }
 
       .logo {
         font-size: 1.5rem;
-        color: #629924;
-        font-weight: bold;
       }
 
       nav {
@@ -88,15 +84,20 @@
         color: var(--light-color);
       }
 
+      board {
+        /* background-image: url("https://images.chesscomfiles.com/uploads/v1/images_users/tiny_mce/CHESScom/phphK5JVu.png"); */
+        flex-grow: 1;
+        background-color: red;
+      }
+
       .hero {
-        background-color: var(
-          --special-light-color
-        ); /* Set special light background */
+        background-color: var(--special-light-color);
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
         height: 20vh;
       }
 
@@ -110,25 +111,25 @@
       .feature {
         text-align: center;
         margin-bottom: 2vh;
-        padding: 1.5%;
-        width: 20vw;
+        height: 20vh;
+        width: 30vw;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        background-color: #f7f0f0;
         cursor: pointer;
-        color: var(--light-color); /* Light text color */
+        color: var(--special-light-color);
         transition: 0.3s;
-        background-color: #629924;
       }
 
       .feature:hover {
-        background-color: #4e791c;
+        background-color: #e9e4e4;
       }
 
       .feature p {
-        color: var(--light-color); /* Light text color */
+        color: #666;
       }
 
       .subtitle {
@@ -163,7 +164,7 @@
       .play-button {
         cursor: pointer;
         user-select: none;
-        /* color: var(--dark-color); */
+        color: var(--dark-color);
       }
 
       .play-icon {
@@ -189,7 +190,6 @@
       .active-option {
         font-weight: bold;
       }
-
       .loader {
         color: #629924;
         animation: load 1s linear infinite;
@@ -352,6 +352,8 @@
         }
       }
 
+      /*intermediate screen width*/
+
       /*New styles*/
 
       body {
@@ -438,7 +440,6 @@
         </div>
       </div>
     </div>
-
     <header>
       <div class="logo"><i class="fas fa-chess"></i> PiChess</div>
       <nav>
@@ -450,6 +451,13 @@
       </nav>
     </header>
 
+    <section class="hero">
+      <h1><i class="fas fa-chess"></i> Welcome to PiChess</h1>
+      <p>
+        PiChess is under development , therefore bugs are expected. Please feel
+        free to submit your feedback and report bugs <a href="/">Here</a>.
+      </p>
+    </section>
     <section class="features">
       <div class="feature">
         <h2 class="play-button" id="play-online-button">
@@ -471,7 +479,7 @@
         <h2 class="play-button" id="play-stockfish-button">
           <i class="fas fa-chess-knight"></i> Play with Stockfish
         </h2>
-        <p class="subtitle">Challenge the strongest Chess Engine to date.</p>
+        <p class="subtitle">Play with the strongest Chess Engine till now.</p>
       </div>
       <div class="feature">
         <h2 class="play-button" id="custom-game-button">
