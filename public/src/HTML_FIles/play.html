@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PiChess</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="../../src/CSS_Files/play.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+
+</head>
+
+
+
+
+<body>
+
+
+
+    <div class="mini-board-wrapper">
+        <div class="mini-board">
+            <div class="mini-file">
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+            </div>
+            <div class="mini-file">
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+            </div>
+            <div class="mini-file">
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+            </div>
+            <div class="mini-file">
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+            </div>
+            <div class="mini-file">
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+            </div>
+            <div class="mini-file">
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+            </div>
+            <div class="mini-file">
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+            </div>
+            <div class="mini-file">
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+                <div class="mini-square mini-dark-square"></div>
+                <div class="mini-square mini-light-square"></div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="warning-message"></div>
+    <div class="success-message"></div>
+
+    <div class="left-slider-options showup">
+
+        <div class="left-slider-option"><i class="fas fa-user"> </i> &nbsp;Profile</div>
+        <div class="left-slider-option"><i class="fas fa-chess-board"> </i>&nbsp; Board settings</div>
+        <div class="left-slider-option try-premium-option"><i class="fas fa-coins"></i>&nbsp; Try premium</div>
+        <div class="left-slider-option donate-option"><i class="fas fa-dollar"></i>&nbsp; Donate</div>
+        <div class="left-slider-option logout-option"><i class="fas fa-sign-out"></i>&nbsp; Logout</div>
+
+
+    </div>
+
+    <div class="profile-wrapper">
+        <div class="profile-container">
+            <div class="close-button"
+                onclick="document.getElementsByClassName('profile-wrapper')[0].style.display='none'"><i
+                    class="fas fa-times"></i></div>
+            <div class="profile-header">
+                <img src="../../assets/image-files/chess.com-image.png" alt="Profile Picture" class="profile-pic">
+                <div class="username"></div>
+                <div class="user-rating">Rating: <span class="rating-value"></span></div>
+            </div>
+            <div class="info-section">
+                <div class="info-label ">Email:</div>
+                <div class="info-value email-value"></div>
+            </div>
+            <div class="info-section">
+                <div class="info-label">Joined:</div>
+                <div class="info-value joined-value"></div>
+            </div>
+            <div class="user-performance-info">
+                <div class="performance-info games-played">
+                    <div class="info-label">Played</div>
+                    <div class="games-played-value"></div>
+                </div>
+                <div class="performance-info games-won">
+                    <div class="info-label">Won</div>
+                    <div class="games-won-value"></div>
+                </div>
+                <div class="performance-info games-lost">
+                    <div class="info-label">Lost</div>
+                    <div class="games-lost-value"></div>
+                </div>
+                <div class="performance-info games-draw">
+                    <div class="info-label">Draw</div>
+                    <div class="games-draw-value"></div>
+                </div>
+                <div class="performance-info win-percent">
+                    <div class="info-label">Win</div>
+                    <div class="win-percent-value"></div>
+                </div>
+            </div>
+
+
+            <div class="profile-actions">
+                <div class="profile-action change-password">Change Password</div>
+                <div class="profile-action delete-account">Delete Account</div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <img src="../../assets/image-files/black-color-chess-piece-set-free-vector.jpg" class="absolute-image" alt="">
+    <div class="main">
+        <div class="header-mobile">
+            <div class="nav-options-mobile">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo">
+                <i class="fas fa-chess"></i>
+                PiChess.org
+            </div>
+            <div class="search-bar-mobile">
+                <i class="fas fa-search search-icon-mobile"></i>
+            </div>
+            <div class="user-info-mobile">
+                <i class="fas fa-user-plus"></i>
+            </div>
+
+
+
+        </div>
+        <div class="header">
+            <div class="left-header">
+                <div class="logo">
+                    <i class="fas fa-chess"></i>
+                    PiChess.org
+
+                </div>
+                <div class="profile">
+                    <div style="margin-right: 0.5vw;" class="user-icon">
+                        <!-- <img src="../../assets/image-files/chess.com-image.png" alt="" class="profile-image"> -->
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="" id="username"></div>
+
+                </div>
+
+            </div>
+            <div class="right-header">
+                <div class="settings " onclick="showSettings()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="play-options-card">
+            <div class="puzzle-board">
+
+                <div class="player-profile" id="opponent-profile">
+                    <div class="profile-icon">
+                        <img src="../../assets/image-files/default_profile.gif" alt="" class="profile-image">
+                    </div>
+                    <div class="profile-name">
+                        Opponent
+
+                    </div>
+                    <div class="profile-rating">
+
+                    </div>
+                    <div class="opponent-searching">
+                        Searching
+
+                        <i class="fas fa-spinner fa-spin"></i>
+
+                    </div>
+                </div>
+                <div class="rank">
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                </div>
+                <div class="rank">
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                </div>
+                <div class="rank">
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                </div>
+                <div class="rank">
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                </div>
+                <div class="rank">
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                </div>
+                <div class="rank">
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                </div>
+                <div class="rank">
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                </div>
+                <div class="rank">
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                    <div class="square dark-square"></div>
+                    <div class="square light-square"></div>
+                </div>
+
+                <div class="player-profile" id="my-profile">
+                    <div class="profile-icon">
+                        <img src="../../assets/image-files/chess.com-image.png" alt="" class="profile-image">
+                    </div>
+                    <div class="profile-name">
+                        Shafaat112
+
+                    </div>
+                    <div class="profile-rating">
+                        (768)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="play-options card">
+                <div class="online-searching">
+                    <div class="online-searching-animation">
+                        <div class="loading-animation"></div>
+                    </div>
+
+
+
+
+                    <div class="subtitle">This might take some time! <a href="">Learn more</a></div>
+                    <div class="online-searching-stop" onclick="cancelOnlineSearch()">
+                        cancel
+                    </div>
+
+                </div>
+                <div class="play-options-card-title">
+                    <h2><i class="fas fa-chess"></i> Play Chess</h2>
+                </div>
+
+                <div class="play-button" id="play-online-button" onclick="playOnline()"><i class="fas fa-globe"></i>
+                    Play Online
+                </div>
+                <div class="play-button" id="play-computer-button" onclick="playComputer()"><i
+                        class="fas fa-desktop"></i> Play With Computer</div>
+                <div class="play-button" id="play-online-button" onclick="playStockfish()"><i class="fas fa-fish"></i>
+                    Play
+                    With Stockfish</div>
+                <div class="play-button"><i class="fas fa-cogs"></i>
+                    Create a Custom game</div>
+            </div>
+            <div class="completed-games">
+                <div class="completed-games-title">
+                    <div>Completed Games</div>
+                    <div class="more-completed-games"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Players</th>
+                                <th>Result</th>
+                                <th>Accuracy</th>
+                                <th>Moves</th>
+                                <th>Date</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body">
+                            <!-- Table rows -->
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+        <div style="padding: 1vw;font-weight: bold;">
+            &copy; PiChess 2023-2024
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
+</body>
+<script src="../../src/JS_FIles/play.js"></script>
+
+
+</html>

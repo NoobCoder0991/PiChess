@@ -1,15 +1,9 @@
 {
-  "name": "online-chess",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Shafaat_Hussain",
-  "license": "ISC",
   "dependencies": {
-    "nodemon": "^3.0.2",
-    "socket.io": "^4.7.2"
+    "cookie-parser": "^1.4.6",
+    "express": "^4.18.3",
+    "express-socket.io-session": "^1.3.5",
+    "stockfish.js": "^10.0.2",
+    "xlsx": "^0.18.5"
   }
 }
