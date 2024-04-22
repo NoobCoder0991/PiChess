@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/Users/shafa/Desktop/BIG_FOLDER/Chess Pro Test - 4",
+      "program": "c:/Users/shafa/Desktop/BIG_FOLDER/Chess Pro Test - 4/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

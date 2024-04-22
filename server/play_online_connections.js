@@ -495,8 +495,8 @@ function updateUserInfo(
 
   if (winner) {
     // Constants
-    const K_FACTOR1 = 800 / winnerInfo.total_games;
-    const K_FACTOR2 = 800 / loserInfo.total_games;
+    const K_FACTOR1 = 800 / (1 + winnerInfo.total_games);
+    const K_FACTOR2 = 800 / (1 + loserInfo.total_games);
 
     // Calculate expected scores
     const winnerExpectedScore =
