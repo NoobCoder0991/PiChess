@@ -11,6 +11,8 @@ const socket = io("/play");
 
 
 
+warningMessage('This is a test warning. Do not take is seriously! What the fuck')
+
 
 var userInfo;
 
@@ -20,10 +22,10 @@ sendPostRequest('/fetch_info', {})
 
       userInfo = data.userInfo;
       document.getElementById('username').innerHTML = (userInfo.title == "") ? userInfo.username : "<span class='user-title'>" + userInfo.title + "</span> " + userInfo.username;
-      document.getElementsByClassName('profile-name')[1].innerHTML = (userInfo.title == "") ? userInfo.username : "<span class='user-title'>" + userInfo.title + "</span> " + userInfo.username;
+      // document.getElementsByClassName('profile-name')[1].innerHTML = (userInfo.title == "") ? userInfo.username : "<span class='user-title'>" + userInfo.title + "</span> " + userInfo.username;
       document.getElementsByClassName('username')[0].innerHTML = userInfo.title == "" ? userInfo.username : "<span class='user-title'>" + userInfo.title + "</span> " + userInfo.username;
       document.getElementsByClassName('rating-value')[0].innerHTML = userInfo.rating;
-      document.getElementsByClassName('profile-rating')[1].innerHTML = "(" + userInfo.rating + ")";
+      // document.getElementsByClassName('profile-rating')[1].innerHTML = "(" + userInfo.rating + ")";
       document.getElementsByClassName('email-value')[0].innerHTML = userInfo.email
       document.getElementsByClassName('joined-value')[0].innerHTML = "NA"
       document.getElementsByClassName('games-played-value')[0].innerHTML = userInfo.total_games
@@ -41,11 +43,7 @@ sendPostRequest('/fetch_info', {})
         document.getElementsByClassName('win-percent-value')[0].innerHTML = "NA"
       }
 
-      document.getElementsByClassName('profile')[0].addEventListener('click', e => {
-        document.getElementsByClassName('profile-wrapper')[0].style.display = 'flex'
 
-        makeUserInfoBarGraph(userInfo);
-      })
 
       let completedGames = userInfo.games;
       let completedGamesLength = completedGames.length
@@ -308,10 +306,10 @@ async function sendPostRequest(url, postData) {
 }
 
 function warningMessage(warning) {
-  document.getElementsByClassName('warning-message')[0].innerHTML = warning
-  document.getElementsByClassName('warning-message')[0].style.display = 'flex'
+  document.getElementsByClassName('warning-message-wrapper')[0].style.display = 'flex'
+  document.getElementsByClassName('warning-message-text')[0].innerHTML = warning
   setTimeout(() => {
-    document.getElementsByClassName('warning-message')[0].style.display = 'none'
+    // document.getElementsByClassName('warning-message-wrapper')[0].style.display = 'none'
 
   }, 2000)
 }
@@ -580,7 +578,8 @@ function createTableRow(whiteName, blackName, whiteRate, blackRate, moveCount, d
   var td6 = document.createElement('td');
   let downloadDiv = document.createElement('span');
   downloadDiv.classList.add('completed-game-download');
-  downloadDiv.innerHTML = '<i class="fas fa-download"></i>'
+  downloadDiv.classList.add('big-button');
+  downloadDiv.innerHTML = 'Download'
   let downloadOptions = document.createElement('div');
   downloadOptions.classList.add('download-options');
 

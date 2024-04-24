@@ -62,12 +62,20 @@ app.get("/", (req, res) => {
     "C:/Users/shafa/Desktop/BIG_FOLDER/Chess Pro Test - 4/public/src/HTML_Files/index.html"
   );
 });
-app.get("/test", (req, res) => {
-  // res.sendFile(
-  //   "C:/Users/shafa/Desktop/BIG_FOLDER/Chess Pro Test - 4/public/src/HTML_Files/completed_game.html"
-  // );
-  res.render('completed_game')
-});
+app.get('/profile', (req, res) => {
+  let sessionId = req.session.sessionId;
+  const user = db.findOne('session_tokens', { token: { session_id: sessionId, expired: false } });
+  if (user) {
+    const userid = user.userid;
+    const userInfo = db.findOne('game_info', { userid: userid }).info;
+
+    res.render('profile', userInfo)
+  }
+  else {
+    res.redirect('/login?returnUrl=profile')
+  }
+
+})
 
 app.get("/signup", (req, res) => {
   res.sendFile(
@@ -78,7 +86,7 @@ app.get("/login", (req, res) => {
   let sessionId = req.session.sessionId;
   const user = db.findOne('session_tokens', { token: { session_id: sessionId, expired: false } });
   if (user) {
-    res.redirect('/play?userid=' + user.userid)
+    res.redirect('/play')
   }
   else {
 

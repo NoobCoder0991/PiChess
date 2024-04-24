@@ -294,6 +294,16 @@
 
 <script>
 
+    /*Extracting URL parameters*/
+    const urlObj = new URL(window.location.href);
+
+    // Access the search parameters
+    const params = urlObj.searchParams;
+    const returnUrl = params.get('returnUrl')
+    //
+
+
+
     let loginButton = document.getElementsByClassName("login")[0];
     loginButton.addEventListener('click', e => {
         let email = document.getElementsByClassName('email-input')[0].value;
@@ -302,7 +312,14 @@
             .then(responce => {
                 if (responce.ok) {
                     successMessage("Authentication Successful")
-                    window.location.href = responce.url
+                    if (returnUrl) {
+                        window.location.href = '/' + returnUrl;
+
+                    }
+                    else {
+                        window.location.href = responce.url
+
+                    }
                 }
                 else {
                     warningMessage("Invalid Credentials")

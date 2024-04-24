@@ -13,16 +13,13 @@
 /* Hello world */
 :root {
     --body-color: #312e2b;
-
     --primary: rgb(23, 23, 23);
     --default-color: #bababa;
-
     --accent: rgb(205, 40, 18);
     --secondary: #5f8805;
-    --puzzle-board-width: 24vw;
-    --puzzle-board-width-mobile: 96vw;
-    --square-width: 3vw;
-    --square-width-mobile: 12vw;
+    --square-width: 2.5vw;
+    --square-width-mobile: 10vw;
+    --square-width-intermediate: 4vw;
 
 }
 
@@ -189,9 +186,9 @@ body {
     display: flex;
     flex-direction: column;
     padding: 1% 1%;
-    /* margin: 0 12vw; */
     border-radius: 8px;
 }
+
 
 .blog-description {
     display: flex;
@@ -213,6 +210,10 @@ body {
 
 .puzzle-of-the-day {
     margin-bottom: 5vh;
+}
+
+.puzzle-board {
+    align-items: center;
 }
 
 .rank {
@@ -398,6 +399,12 @@ a {
     display: none;
 }
 
+.warning-close-button {
+    cursor: pointer;
+    font-size: x-large;
+    padding: 1%;
+}
+
 .logo-image {
     width: 10vw;
     height: 10vh;
@@ -407,7 +414,7 @@ a {
 .piece {
     position: absolute;
     width: var(--square-width);
-
+    pointer-events: none;
     transition: 0.2s;
     cursor: pointer;
 }
@@ -756,24 +763,40 @@ a {
     display: flex;
 }
 
-.warning-message {
-
+.warning-message-wrapper {
     position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    height: 8vh;
-    background-color: #333;
-    animation: show 0.3s;
     display: flex;
     justify-content: center;
+    align-items: center;
+    top: 0;
+    height: 9vh;
+    width: 100%;
+    z-index: 10;
+    display: none;
+    animation: show 0.2s;
+}
+
+.warning-message {
+
+    min-width: 50%;
+    max-width: 95%;
+    background-color: #333;
+
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
     text-align: center;
     align-items: center;
     font-size: large;
     font-weight: bold;
     background-color: var(--accent);
-    display: none;
 
+}
+
+.warning-message-text {
+    max-width: 90%;
 }
 
 @keyframes show {
@@ -1035,7 +1058,7 @@ a {
 }
 
 .completed-games {
-    width: 60vw;
+    /* width: 60vw; */
     margin: 1% 0%;
     background-color: #252323;
     background-color: #242222;
@@ -1203,14 +1226,6 @@ th {
     background-color: rgba(34, 34, 34, 1);
 }
 
-.completed-game-download {
-    background-color: var(--secondary);
-    padding: 0.8vw;
-    border-radius: 3px;
-    cursor: pointer;
-
-}
-
 .download-options {
     position: absolute;
     display: flex;
@@ -1263,11 +1278,82 @@ th {
     border-radius: 5px;
 }
 
+.advanced-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-links {
+    color: var(--default-color);
+    font-size: small;
+    width: 100%;
+    text-align: center;
+    /* text-wrap: nowrap; */
+}
+
+.footer-link {
+    color: grey;
+    margin: 0 0.5%;
+}
+
+.footer-link:hover {
+    color: white;
+}
+
+.footer-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: grey;
+    font-size: xx-large;
+    width: 100vw;
+}
+
+.footer-options>div {
+    margin-right: 2vw;
+}
+
+.footer-option {
+    color: grey;
+    text-wrap: nowrap;
+    margin: 0 0.5vw;
+}
+
+.footer-option:hover {
+    color: white;
+}
+
+
+#opponent-profile {
+    display: none;
+}
+
+.solve-puzzle-button,
+.take-lessons-button {
+    align-self: center;
+    padding: 2% 15%;
+    margin: 2% 0;
+}
 
 /*small screen*/
+@media screen and (min-width:601px) and (max-width:800px) {
+    /* .square {
+        width: var(--square-width-intermediate);
+        height: var(--square-width-intermediate);
+    } */
+}
 
 @media screen and (max-width:600px) {
 
+
+    .card {
+        margin-bottom: 1%;
+    }
 
     .white-flag,
     .black-flag {
@@ -1281,6 +1367,7 @@ th {
 
     .play-options-card {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         padding: 3%;
@@ -1290,8 +1377,13 @@ th {
         width: 100%;
     }
 
-    .puzzle-board {
+    .mini-board {
         display: none;
+    }
+
+    .puzzle-board {
+        /* display: none; */
+        width: 100%;
     }
 
     .play-options {
@@ -1306,7 +1398,6 @@ th {
         display: flex;
         display: none;
         justify-content: space-around;
-        /* align-items: center; */
     }
 
     .header-mobile>div {

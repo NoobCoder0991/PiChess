@@ -428,6 +428,14 @@ ul li:hover {
 
 .sign-in {
     cursor: pointer;
+    padding: 0.3% 1%;
+    border-radius: 3px;
+    background-color: var(--secondary);
+    border: 2px solid var(--secondary);
+}
+
+.sign-up {
+    cursor: pointer;
     border: 2px solid var(--secondary);
     padding: 0.3% 1%;
     border-radius: 3px;
