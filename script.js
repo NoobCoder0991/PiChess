@@ -10,9 +10,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require("path")
 
-const db = require("../database/dbmethods")
+const db = require("./database/dbmethods")
 const helper_functions = require("./helper_functions");
-const handlesPuzzleRequests = require("./puzzles");
 const stockfishConnections = require("./stockfish_connections");
 const chess = require("./chess")
 const playOnlineConnections = require("./play_online_connections");
@@ -36,11 +35,11 @@ app.use(sessionMiddleware);
 app.set('view engine', 'pug');
 
 // Set the directory where your Pug templates are located
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, '/views'));
 
 
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 
 const isAuthenticated = (req, res, next) => {
@@ -56,7 +55,7 @@ const isAuthenticated = (req, res, next) => {
 };
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/src/HTML_Files/index.html"))
+  res.sendFile(path.join(__dirname, "/public/src/HTML_Files/index.html"))
 });
 app.get('/profile', (req, res) => {
   let sessionId = req.session.sessionId;
@@ -75,7 +74,7 @@ app.get('/profile', (req, res) => {
 
 app.get("/signup", (req, res) => {
   res.sendFile(
-    path.join(__dirname, "../public/src/HTML_Files/signup.html")
+    path.join(__dirname, "/public/src/HTML_Files/signup.html")
   );
 });
 app.get("/login", (req, res) => {
@@ -87,14 +86,14 @@ app.get("/login", (req, res) => {
   else {
 
     res.sendFile(
-      path.join(__dirname, "../public/src/HTML_Files/login.html")
+      path.join(__dirname, "/public/src/HTML_Files/login.html")
     );
   }
 });
 
 app.get("/play", isAuthenticated, (req, res) => {
 
-  res.sendFile(path.join(__dirname, "../public/src/HTML_Files/play.html"))
+  res.sendFile(path.join(__dirname, "/public/src/HTML_Files/play.html"))
 
 
 
@@ -148,12 +147,12 @@ io.of("/play").on("connection", (socket) => {
 
       app.get(url1, (req, res) => {
         res.sendFile(
-          path.join(__dirname, "../public/src/HTML_Files/white.html")
+          path.join(__dirname, "/public/src/HTML_Files/white.html")
         );
       });
       app.get(url2, (req, res) => {
         res.sendFile(
-          path.join(__dirname, "../public/src/HTML_Files/black.html")
+          path.join(__dirname, "/public/src/HTML_Files/black.html")
         );
       });
       onlineRequests = [];

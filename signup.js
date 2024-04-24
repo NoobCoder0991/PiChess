@@ -1,6 +1,6 @@
 const helper_functions = require("./helper_functions")
 
-const db = require("../database/dbmethods")
+const db = require("./database/dbmethods")
 const chess = require("./chess")
 
 function handleSignUp(app) {
@@ -30,7 +30,7 @@ function handleSignUp(app) {
                 const authenticationToken = { token: authToken, startTime: new Date().getTime(), lifeTime: 300000, valid: true }
                 app.get(`/signup/auth`, (req, res) => {
                     res.sendFile(
-                        path.join(__dirname, "../public/src/HTML_Files/otpauth.html")
+                        path.join(__dirname, "/public/src/HTML_Files/otpauth.html")
                     );
                 })
                 res.send({ message: "Email has been sent to your email id: " + requestData.email, ok: true, url: `${authToken}` });

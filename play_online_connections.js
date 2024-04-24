@@ -1,4 +1,4 @@
-const db = require("../database/dbmethods");
+const db = require("./database/dbmethods");
 const chess = require("./chess");
 const helper_functions = require("./helper_functions");
 function handlePlayOnlineConnections(online) {
