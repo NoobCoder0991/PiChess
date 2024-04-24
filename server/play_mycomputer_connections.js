@@ -1,5 +1,6 @@
 const helper_functions = require("./helper_functions");
 const chess = require("./chess");
+const path = require('path')
 
 function handlePlayMyComputerRequests(io, app) {
   var connected = [];
@@ -8,7 +9,7 @@ function handlePlayMyComputerRequests(io, app) {
       const url = helper_functions.generateURL(8);
       app.get("/play/computer/" + url, (req, res) => {
         res.sendFile(
-          "C:/Users/shafa/Desktop/BIG_FOLDER/Chess Pro Test - 4/public/src/HTML_Files/engine.html"
+          path.join(__dirname, "../public/src/HTML_Files/engine.html")
         );
       });
       socket.emit("play-mycomputer-responce", {
@@ -42,7 +43,7 @@ function handlePlayMyComputerRequests(io, app) {
       const url = helper_functions.generateURL(8);
       app.get("/play/computer/" + url, (req, res) => {
         res.sendFile(
-          "C:/Users/shafa/Desktop/BIG_FOLDER/Chess Pro Test - 4/public/src/HTML_Files/engine.html"
+          path.join(__dirname, "../public/src/HTML_Files/engine.html")
         );
       });
       socket.emit("new-game-responce", {
