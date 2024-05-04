@@ -2,7 +2,7 @@ var socket = io("/play/computer");
 
 var pieceLocations = [];
 
-let Depth = 4;
+let Depth = 8;
 let moveSound = new Audio("../../assets/sound-files/lichess-move.ogg");
 let captureSound = new Audio("../../assets/sound-files/lichess-capture.ogg");
 let background = new Audio("../../assets/sound-files/background.mp3");
@@ -2307,6 +2307,7 @@ function refreshBoard(move, smooth, type) {
 }
 //Main Game Engine(New optimized,fast and powerful)
 function gameEngine(board, color) {
+
 
   document.getElementsByTagName("title")[0].innerHTML =
     "Computer playing-PiChess Play with computer";

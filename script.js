@@ -73,9 +73,10 @@ app.get('/profile', (req, res) => {
 })
 
 app.get("/signup", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "/public/src/HTML_Files/signup.html")
-  );
+  // res.sendFile(
+  //   path.join(__dirname, "/public/src/HTML_Files/signup.html")
+  // );
+  res.send("<h1>404- Not Found</h1><br><a href='/'>Home</a>")
 });
 app.get("/login", (req, res) => {
   let sessionId = req.session.sessionId;

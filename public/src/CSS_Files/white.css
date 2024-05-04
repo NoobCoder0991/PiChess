@@ -297,7 +297,6 @@ action:hover {
 .recapeButton {
     padding: 1vh 0.1vw;
     cursor: pointer;
-    /* font-size: x-large; */
     width: 15%;
     display: flex;
     justify-content: center;
@@ -319,7 +318,6 @@ action:hover {
     display: flex;
     align-items: center;
     background-color: #333;
-    /* box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); */
 }
 
 .nav-element {

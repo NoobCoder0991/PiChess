@@ -11,7 +11,6 @@ const socket = io("/play");
 
 
 
-warningMessage('This is a test warning. Do not take is seriously! What the fuck')
 
 
 var userInfo;
@@ -575,49 +574,49 @@ function createTableRow(whiteName, blackName, whiteRate, blackRate, moveCount, d
   var td5 = document.createElement("td");
   td5.innerHTML = date;
 
-  var td6 = document.createElement('td');
-  let downloadDiv = document.createElement('span');
-  downloadDiv.classList.add('completed-game-download');
-  downloadDiv.classList.add('big-button');
-  downloadDiv.innerHTML = 'Download'
-  let downloadOptions = document.createElement('div');
-  downloadOptions.classList.add('download-options');
+  // var td6 = document.createElement('td');
+  // let downloadDiv = document.createElement('span');
+  // downloadDiv.classList.add('completed-game-download');
+  // downloadDiv.classList.add('big-button');
+  // downloadDiv.innerHTML = 'Download'
+  // let downloadOptions = document.createElement('div');
+  // downloadOptions.classList.add('download-options');
 
-  let downloadPGN = document.createElement('div');
-  downloadPGN.classList.add('download-option')
-  downloadPGN.classList.add('download-pgn-format')
-  downloadPGN.innerHTML = 'Download PGN'
+  // let downloadPGN = document.createElement('div');
+  // downloadPGN.classList.add('download-option')
+  // downloadPGN.classList.add('download-pgn-format')
+  // downloadPGN.innerHTML = 'Download PGN'
 
-  let downloadPCN = document.createElement('div');
-  downloadPCN.classList.add('download-option')
-  downloadPCN.classList.add('download-pichess-format')
-  downloadPCN.innerHTML = 'Download PCN'
+  // let downloadPCN = document.createElement('div');
+  // downloadPCN.classList.add('download-option')
+  // downloadPCN.classList.add('download-pichess-format')
+  // downloadPCN.innerHTML = 'Download PCN'
 
-  downloadOptions.appendChild(downloadPGN)
-  downloadOptions.appendChild(downloadPCN)
+  // downloadOptions.appendChild(downloadPGN)
+  // downloadOptions.appendChild(downloadPCN)
 
-  downloadDiv.appendChild(downloadOptions)
-  td6.appendChild(downloadDiv)
+  // downloadDiv.appendChild(downloadOptions)
+  // td6.appendChild(downloadDiv)
 
-  td6.addEventListener('mouseover', e => {
-    e.stopPropagation()
-    downloadOptions.style.display = 'flex'
-  })
-  td6.addEventListener('mouseout', e => {
-    e.stopPropagation()
-    downloadOptions.style.display = 'none'
-  })
+  // td6.addEventListener('mouseover', e => {
+  //   e.stopPropagation()
+  //   downloadOptions.style.display = 'flex'
+  // })
+  // td6.addEventListener('mouseout', e => {
+  //   e.stopPropagation()
+  //   downloadOptions.style.display = 'none'
+  // })
 
-  downloadPCN.addEventListener('click', e => {
+  // downloadPCN.addEventListener('click', e => {
 
-    e.stopPropagation()
-    downloadCompletedGame("pcn", index);
-  })
-  downloadPGN.addEventListener('click', e => {
+  //   e.stopPropagation()
+  //   downloadCompletedGame("pcn", index);
+  // })
+  // downloadPGN.addEventListener('click', e => {
 
-    e.stopPropagation()
-    downloadCompletedGame("pgn", index);
-  })
+  //   e.stopPropagation()
+  //   downloadCompletedGame("pgn", index);
+  // })
 
 
 
@@ -627,7 +626,7 @@ function createTableRow(whiteName, blackName, whiteRate, blackRate, moveCount, d
   tableRow.appendChild(td3);
   tableRow.appendChild(td4);
   tableRow.appendChild(td5);
-  tableRow.appendChild(td6);
+  // tableRow.appendChild(td6);
 
   // Append table row to table body or any other parent element
   return tableRow;
