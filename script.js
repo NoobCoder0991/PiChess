@@ -9,7 +9,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const path = require("path")
-
 const db = require("./database/dbmethods")
 const helper_functions = require("./helper_functions");
 const stockfishConnections = require("./stockfish_connections");
