@@ -186,4 +186,6 @@ function handleStockfishConnections(io, app) {
   });
 }
 
+console.log("At the End");
+
 module.exports = { handleStockfishConnections };
