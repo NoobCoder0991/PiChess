@@ -56,6 +56,13 @@
         margin: 3% 0;
     }
 
+    .cancel-button {
+        padding: 1vw 10%;
+        text-align: center;
+        margin: 3% 0;
+        background-color: red;
+    }
+
     .game-settings {
         display: flex;
         flex-direction: column;
@@ -156,6 +163,24 @@
     .fa-rocket {
         color: orangered;
         font-size: large;
+    }
+
+    .match-starting-info-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        display: none;
+        align-items: center;
+    }
+
+    .match-starting-info-div>div {
+        margin: 3% 0;
+    }
+
+    .search-cancel-button {
+        background-color: var(--accent);
+        padding: 1vh 1vw;
+        cursor: pointer;
     }
 </style>
 
@@ -335,6 +360,7 @@
 
         </div>
 
+
         <div class="game-settings-wrapper">
             <div class="game-settings-title">
                 <h2>Time Control</h2>
@@ -417,9 +443,23 @@
 
             </div>
 
-            <h2 class="play-button big-button">
+            <h2 class="play-button big-button" onclick="findOnineMatch()">
                 Play
             </h2>
+
+
+            <div class="match-starting-info-div">
+                <div class="search-game-details">
+                    <h2 class="type">Blitz</h2>
+                    <div class="time-control">2 min</div>
+                </div>
+                <div class="searching-message">
+                    Starting soon...
+                </div>
+                <div class="search-cancel-button" onclick="cancelOnlineMatch()">
+                    Cancel
+                </div>
+            </div>
 
 
 
@@ -453,6 +493,23 @@
             // piece.style.top = rect2.top - chessBoard.getBoundingClientRect().top + 'px';
             chessboard.appendChild(piece);
         }
+    }
+
+    function findOnineMatch() {
+        document.getElementsByClassName('profile-name')[0].innerHTML = 'Searching <i class="fas fa-spinner fa-spin"></i>'
+        document.getElementsByClassName('game-settings')[0].style.display = "none"
+        document.getElementsByClassName('game-settings-title')[0].style.display = "none"
+        document.getElementsByClassName('play-button')[0].style.display = "none"
+        document.getElementsByClassName('match-starting-info-div')[0].style.display = "flex"
+
+    }
+    function cancelOnlineMatch() {
+        document.getElementsByClassName('profile-name')[0].innerHTML = 'Opponent'
+        document.getElementsByClassName('game-settings')[0].style.display = "flex"
+        document.getElementsByClassName('game-settings-title')[0].style.display = "flex"
+        document.getElementsByClassName('play-button')[0].style.display = "block"
+        document.getElementsByClassName('match-starting-info-div')[0].style.display = "none"
+
     }
 </script>
 

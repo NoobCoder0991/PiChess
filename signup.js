@@ -3,6 +3,8 @@ const helper_functions = require("./helper_functions")
 const db = require("./database/dbmethods")
 const chess = require("./chess")
 
+const path = require("path")
+
 function handleSignUp(app) {
 
     app.post('/getotp', (req, res) => {

@@ -54,20 +54,20 @@ sendPostRequest('/fetch_info', {})
           let gameInfo = JSON.parse(completedGame);
           let moveCount = parseInt((gameInfo.game.split(" ").length - 1) / 2)
           let date = gameInfo.date
-          console.log(date)
           let gameElement;
+          console.log("gameInfo", gameInfo)
 
           let winner = gameInfo.winner;
 
           if (winner == 1) {
-            gameElement = createTableRow(gameInfo.winnerUsername, gameInfo.loserUsername, gameInfo.winnerRating, gameInfo.loserRating, moveCount, date, 1, gameInfo.perspective, i)
+            gameElement = createTableRow(gameInfo.winnerUsername, gameInfo.loserUsername, gameInfo.winnerRating, gameInfo.loserRating, moveCount, date, 1, gameInfo.perspective, gameInfo.resultFen, i)
           }
           else if (winner == -1) {
-            gameElement = createTableRow(gameInfo.loserUsername, gameInfo.winnerUsername, gameInfo.loserRating, gameInfo.winnerRating, moveCount, date, -1, gameInfo.perspective, i)
+            gameElement = createTableRow(gameInfo.loserUsername, gameInfo.winnerUsername, gameInfo.loserRating, gameInfo.winnerRating, moveCount, date, -1, gameInfo.perspective, gameInfo.resultFen, i)
 
           }
           else {
-            gameElement = createTableRow(gameInfo.winnerUsername, gameInfo.loserUsername, gameInfo.winnerRating, gameInfo.loserRating, moveCount, date, 0, gameInfo.perspective, i)
+            gameElement = createTableRow(gameInfo.winnerUsername, gameInfo.loserUsername, gameInfo.winnerRating, gameInfo.loserRating, moveCount, date, 0, gameInfo.perspective, gameInfo.resultFen, i)
 
           }
           gameElement.addEventListener('click', e => {
@@ -81,14 +81,6 @@ sendPostRequest('/fetch_info', {})
               })
           })
           document.getElementsByClassName('table-body')[0].appendChild(gameElement);
-
-          gameElement.addEventListener('mouseover', e => {
-            hoverOnCompletedGame(completedGamesLength - i - 1, gameInfo)
-
-          })
-          gameElement.addEventListener('mouseout', e => {
-            document.getElementsByClassName('mini-board-wrapper')[0].style.display = 'none'
-          })
           if (i == completedGamesLength - 5) break;
 
         }
@@ -124,7 +116,14 @@ for (let i = 0; i < navOptions.length; i++) {
 }
 
 let fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-setupBoard(fen, document.getElementsByClassName("puzzle-board")[0]);
+sendPostRequest("/fetch-dialy-puzzle", {})
+  .then(puzzle => {
+    fen = puzzle.game.resultFen
+    setupBoard(fen, document.getElementsByClassName("puzzle-board")[0]);
+  })
+  .catch(err => {
+    console.log("Error", err)
+  })
 
 
 
@@ -219,6 +218,11 @@ function playOnline() {
   if (userInfo) {
 
     document.getElementsByClassName('online-searching')[0].style.display = 'flex'
+    document.getElementsByClassName('play-options-card-title')[0].style.opacity = 0
+    document.getElementsByClassName('play-button')[0].style.opacity = 0
+    document.getElementsByClassName('play-button')[1].style.opacity = 0
+    document.getElementsByClassName('play-button')[2].style.opacity = 0
+    document.getElementsByClassName('play-button')[3].style.opacity = 0
 
     document.getElementsByClassName("opponent-searching")[0].style.display =
       "block";
@@ -252,6 +256,11 @@ function cancelOnlineSearch() {
       document.getElementsByClassName("opponent-searching")[0].style.display =
         "none";
       document.getElementsByClassName("profile-name")[0].style.display = "flex";
+      document.getElementsByClassName('play-options-card-title')[0].style.opacity = 1
+      document.getElementsByClassName('play-button')[0].style.opacity = 1
+      document.getElementsByClassName('play-button')[1].style.opacity = 1
+      document.getElementsByClassName('play-button')[2].style.opacity = 1
+      document.getElementsByClassName('play-button')[3].style.opacity = 1
 
     }
     else {
@@ -387,7 +396,7 @@ function showSettings() {
 }
 
 
-function createTableRow(whiteName, blackName, whiteRate, blackRate, moveCount, date, winner, perspective, index) {
+function createTableRow(whiteName, blackName, whiteRate, blackRate, moveCount, date, winner, perspective, resutlFen, index) {
 
   // Create the table row element
   var tableRow = document.createElement("tr");
@@ -574,51 +583,8 @@ function createTableRow(whiteName, blackName, whiteRate, blackRate, moveCount, d
   var td5 = document.createElement("td");
   td5.innerHTML = date;
 
-  // var td6 = document.createElement('td');
-  // let downloadDiv = document.createElement('span');
-  // downloadDiv.classList.add('completed-game-download');
-  // downloadDiv.classList.add('big-button');
-  // downloadDiv.innerHTML = 'Download'
-  // let downloadOptions = document.createElement('div');
-  // downloadOptions.classList.add('download-options');
 
-  // let downloadPGN = document.createElement('div');
-  // downloadPGN.classList.add('download-option')
-  // downloadPGN.classList.add('download-pgn-format')
-  // downloadPGN.innerHTML = 'Download PGN'
-
-  // let downloadPCN = document.createElement('div');
-  // downloadPCN.classList.add('download-option')
-  // downloadPCN.classList.add('download-pichess-format')
-  // downloadPCN.innerHTML = 'Download PCN'
-
-  // downloadOptions.appendChild(downloadPGN)
-  // downloadOptions.appendChild(downloadPCN)
-
-  // downloadDiv.appendChild(downloadOptions)
-  // td6.appendChild(downloadDiv)
-
-  // td6.addEventListener('mouseover', e => {
-  //   e.stopPropagation()
-  //   downloadOptions.style.display = 'flex'
-  // })
-  // td6.addEventListener('mouseout', e => {
-  //   e.stopPropagation()
-  //   downloadOptions.style.display = 'none'
-  // })
-
-  // downloadPCN.addEventListener('click', e => {
-
-  //   e.stopPropagation()
-  //   downloadCompletedGame("pcn", index);
-  // })
-  // downloadPGN.addEventListener('click', e => {
-
-  //   e.stopPropagation()
-  //   downloadCompletedGame("pgn", index);
-  // })
-
-
+  var resultBoard = createMiniBoard(resutlFen, perspective)
 
   // Append table data cells to table row
   tableRow.appendChild(td1);
@@ -626,7 +592,13 @@ function createTableRow(whiteName, blackName, whiteRate, blackRate, moveCount, d
   tableRow.appendChild(td3);
   tableRow.appendChild(td4);
   tableRow.appendChild(td5);
-  // tableRow.appendChild(td6);
+  tableRow.appendChild(resultBoard)
+  tableRow.addEventListener('mouseover', e => {
+    resultBoard.style.display = 'flex'
+  })
+  tableRow.addEventListener('mouseout', e => {
+    resultBoard.style.display = 'none'
+  })
 
   // Append table row to table body or any other parent element
   return tableRow;
@@ -892,6 +864,7 @@ function createMiniBoard(fen, perspective) {
 
     }
   }
+  return document.getElementsByClassName('mini-board-wrapper')[0].cloneNode(true)
 
 }
 

@@ -1,5 +1,8 @@
 //Generalized maps for the pieces
 
+const { startsWith } = require("lodash");
+const { Namespace } = require("socket.io");
+
 function startPos(color) {
 
   if (color == 1) {
@@ -972,7 +975,6 @@ function unMove(board, move, perspective, cRights, eRights, whiteCastle, blackCa
 
 
 function isLegal(board, color, perspective, whiteCastle, blackCastle, enPassantForWhite, enPassantForBlack, move) {
-  // console.log("data", board, color, perspective, whiteCastle, blackCastle, enPassantForWhite, enPassantForBlack, move)
   let legalmoves = allLegalMoves(board, color, perspective, whiteCastle, blackCastle, enPassantForWhite, enPassantForBlack);
   let testMove = legalmoves.find(obj => (obj.startSquare == move.startSquare && obj.targetSquare == move.targetSquare))
   if (testMove) {
@@ -1315,4 +1317,164 @@ function boardToFen(board, perspective) {
 function reverseString(str) {
   return str.split("").reverse().join('');
 }
-module.exports = { startPos, isLegal, transformMove, playMove, storeCastlingRights, storeEnPassantRights, simplifyMoveNotation, decodeMoveNotation, decodeGame, boardToFen, pgnMove }
+
+
+function decodePGNMove(board, move, color, perspective, whiteCastle, blackCastle, enPassantForWhite, enPassantForBlack) {
+  // the given move is in the format Nf3 and we need to transform it to form like this g1f3
+  if (move == 'O-O' || move == "O-O-O" || move == "o-o" || move == "o-o-o") {
+    if (color == 1) {
+      return move.toUpperCase()
+    }
+    return move.toLowerCase();
+  }
+  let startSquares = [], targetSquare = "";
+  let startPiece;
+  const targetRegex = /[a-h][1-8]/;
+  const targetMatch = move.match(targetRegex);
+
+
+  const startPieceRegex = /[RNBQK]/
+  const startPieceMatch = move.match(startPieceRegex)
+
+
+
+
+  if (targetMatch) {
+    targetSquare += targetMatch[0]
+  }
+  else {
+    throw new Error("Invalid pgn: Need to specify the target square")
+  }
+
+
+  if (startPieceMatch) {
+    startPiece = decodePieceName(startPieceMatch[0]) * color;
+  }
+  else {
+    startPiece = color;
+  }
+
+
+  let found = false;
+
+  let targetIndex = decodeSquareName(targetSquare, perspective);
+  for (let i = 0; i < 64; i++) {
+    if (board[i] == startPiece) {
+      /*Found the start piece on the board */
+      let legal = finalLegalMoves(board, i, color, perspective, whiteCastle, blackCastle, enPassantForWhite, enPassantForBlack);
+      let flag = (legal.find(obj => obj.targetSquare == targetIndex))
+      //error occures here. We need to check for the other attributes of the obj especially for the castling.
+
+      if (flag) {
+
+        startSquares.push(NameSquare(i, perspective))
+        found = true;
+
+      }
+    }
+  }
+
+
+
+
+  if (!found) {
+    console.log("Failed For:", move)
+    console.log("Tried for:", startSquares, targetSquare)
+    console.log("Player turn", (color == 1 ? "white" : "Black"))
+
+    throw new Error("Couldn't find a startsquare! cross check your code buddy")
+  }
+
+  if (startSquares.length > 1) {
+
+    const startFileRegex = /[RNBQK][a-h]/
+    const startFileMatch = move.match(startFileRegex)
+
+    const startFileRegex2 = /[a-h][xX]/
+    const startFileMatch2 = move.match(startFileRegex2)
+    if (startFileMatch) {
+      let startFile = startFileMatch[0][1];
+      for (let i = 0; i < startSquares.length; i++) {
+        if (startSquares[i][0] == startFile) {
+          return startSquares[i] + targetSquare
+        }
+      }
+    }
+    else if (startFileMatch2) {
+      let startFile = startFileMatch2[0][0];
+      for (let i = 0; i < startSquares.length; i++) {
+        if (startSquares[i][0] == startFile) {
+          return startSquares[i] + targetSquare
+        }
+      }
+
+    }
+    else {
+      throw new Error(" Ambiguity in the start square. Multiple pieces of same type can move to the same square. Need to specify the file of the start piece!")
+    }
+  }
+
+
+  return startSquares[0] + targetSquare;
+
+}
+
+
+
+function decodePGNGame(game, perspective) {
+  let moves = game.split(" ");
+
+  let decodedGame = []
+  let board = startPos(perspective);
+  let whiteCastle = [true, true];
+  let blackCastle = [true, true];
+  let enPassantForWhite = [false, -1]
+  let enPassantForBlack = [false, -1]
+  let color = 1;
+
+  for (let move of moves) {
+    let pgnMove = decodePGNMove(board, move, color, perspective, whiteCastle, blackCastle, enPassantForWhite, enPassantForBlack);
+    decodedGame.push(pgnMove)
+    let m = decodeMoveNotation(pgnMove, perspective);
+
+    playMove(board, m, color, perspective, whiteCastle, blackCastle, enPassantForWhite, enPassantForBlack, false)
+    color = -color;
+  }
+
+  return { game: decodedGame.join(" "), resultFen: boardToFen(board, perspective) }
+
+}
+
+function decodeFullPGNGame(game, perspective) {
+  let d = decodePGNGame(game, perspective);
+  return { game: decodeGame(d.game, perspective), resultFen: d.resultFen }
+}
+
+
+function printBoard(board) {
+  let str = "";
+  for (let i = 0; i < 64; i++) {
+    if (board[i] == 1) {
+      str += "P  ";
+    }
+    else if (board[i] == -1) {
+
+      str += "p  ";
+    }
+    else if (board[i]) {
+      str += pieceName(board[i])
+      str += "  ";
+    }
+    else {
+      str += ".  "
+    }
+
+    if (i % 8 == 7) {
+      str += "\n"
+    }
+  }
+
+  console.log(str)
+}
+
+module.exports = { startPos, isLegal, transformMove, playMove, storeCastlingRights, storeEnPassantRights, simplifyMoveNotation, decodeMoveNotation, decodeGame, boardToFen, pgnMove, decodeFullPGNGame }

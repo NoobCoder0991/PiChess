@@ -16,6 +16,7 @@ const chess = require("./chess")
 const playOnlineConnections = require("./play_online_connections");
 const playMycomputerConnections = require("./play_mycomputer_connections");
 const signupConnections = require("./signup")
+const lichess = require("./lichessAPI")
 
 
 app.use(cookieParser())
@@ -72,10 +73,10 @@ app.get('/profile', (req, res) => {
 })
 
 app.get("/signup", (req, res) => {
-  // res.sendFile(
-  //   path.join(__dirname, "/public/src/HTML_Files/signup.html")
-  // );
-  res.send("<h1>404- Not Found</h1><br><a href='/'>Home</a>")
+  res.sendFile(
+    path.join(__dirname, "/public/src/HTML_Files/signup.html")
+  );
+  // res.send("<h1>404- Not Found</h1><br><a href='/'>Home</a>")
 });
 app.get("/login", (req, res) => {
   let sessionId = req.session.sessionId;
@@ -94,30 +95,73 @@ app.get("/login", (req, res) => {
 app.get("/play", isAuthenticated, (req, res) => {
 
   res.sendFile(path.join(__dirname, "/public/src/HTML_Files/play.html"))
+});
+app.get("/dialy/puzzle", isAuthenticated, (req, res) => {
 
-
-
+  res.sendFile(path.join(__dirname, "/public/src/HTML_Files/puzzle.html"))
 });
 
-app.get("/play/puzzle", (req, res) => {
-  res.send("This is a puzzle")
-})
 
-/**handling post request */
+
+app.get('/games', isAuthenticated, (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/src/HTML_Files/all_games.html"))
+
+})
 app.post('/recape-game', (req, res) => {
   const data = req.body.gameInfo
-  console.log('data', data)
   const game = chess.decodeGame(data.game, data.perspective);
   data.game = game
   let sessionId = req.session.sessionId;
   const user = db.findOne('session_tokens', { token: { session_id: sessionId, expired: false } });
   if (user) {
-    let url = '/games/' + helper_functions.generateURL(8);
+    let url = '/games/' + data.gameId;
     res.send({ ok: true, url: url })
     app.get(url, (req, res) => {
       res.render('completed_game', { gameInfo: JSON.stringify(data) })
     })
   }
+
+})
+
+app.post('/fetch-games', (req, res) => {
+  const data = req.body;
+  const page = data.page;
+  let sessionId = req.session.sessionId;
+  const user = db.findOne('session_tokens', { token: { session_id: sessionId, expired: false } });
+  if (user) {
+    const userid = user.userid;
+    const userInfo = db.findOne('game_info', { userid: userid }).info;
+    const games = userInfo.games;
+    const len = games.length
+    let truncatedGames = [];
+    // for (let i = 5 * (page - 1); i < Math.min(games.length, 5 * page); i++) {
+    //   truncatedGames.push(games[i])
+    // }
+
+    for (let i = Math.max(0, len - 5 * page); i < len - 5 * (page - 1); i++) {
+      truncatedGames.push(games[i])
+
+    }
+
+
+    res.send({ games: truncatedGames, gamesLength: userInfo.games.length, username: userInfo.username, title: userInfo.title })
+
+  }
+  else {
+    res.redirect("/login")
+  }
+})
+
+
+app.post("/fetch-dialy-puzzle", async (req, res) => {
+  console.log('Fetching puzzle')
+  let data = await lichess.fetchDailyPuzzle();
+  let puzzle = data.puzzle
+  let pgn = puzzle.game.pgn;
+  let g = chess.decodeFullPGNGame(pgn, 1)
+  puzzle.game.game = g.game
+  puzzle.game.resultFen = g.resultFen
+  res.send(puzzle);
 
 })
 /**Main */
@@ -168,11 +212,7 @@ io.of("/play").on("connection", (socket) => {
   });
 
 
-  socket.on("fetch-puzzle-request", (data) => {
-    const puzzle = handlesPuzzleRequests.fetchRandomPuzzle();
 
-    socket.emit("fetch-puzzle-responce", puzzle);
-  });
 });
 
 const online = io.of("/play/online");

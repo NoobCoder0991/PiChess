@@ -12,8 +12,6 @@ socket.on("ready-ok", (data) => {
     myInfo = data.myInfo;
     opponentInfo = data.opponentInfo;
 
-    document.getElementsByClassName("reconnected")[0].style.display = "flex";
-    document.getElementsByClassName("reconnecting")[0].style.display = "none";
     document.getElementsByClassName("profile-name")[0].innerHTML =
       data.opponentInfo.username;
     document.getElementsByClassName("profile-name")[1].innerHTML =
@@ -26,14 +24,18 @@ socket.on("ready-ok", (data) => {
       "(" + data.opponentInfo.rating + ")";
     document.getElementsByClassName("profile-rating")[1].innerHTML =
       "(" + data.myInfo.rating + ")";
+    document.getElementsByTagName('title')[0].innerHTML = 'Play Online-' + myInfo.username
+
   }
 
+  document.getElementsByClassName("reconnected")[0].style.display = "flex";
+  document.getElementsByClassName("reconnecting")[0].style.display = "none";
   setTimeout(() => {
     document.getElementsByClassName("reconnected")[0].style.display = "none";
   }, 5000);
 });
 
-socket.on("whiteResponce", (move) => {
+socket.on("Responce", (move) => {
   fastForward();
   MakeMove(board, move, true, false);
 });
@@ -55,6 +57,7 @@ socket.on("played-illegal-move", (data) => {
 
 socket.on("opponent-lost-connection", (data) => {
   document.getElementsByClassName("reconnecting")[0].style.display = "flex";
+  document.getElementsByClassName("reconnected")[0].style.display = "none";
 });
 //
 
@@ -2214,7 +2217,7 @@ function MakeMove(board, move, smooth, sendToServer) {
   if (check) checkKingIndex(-turn);
   changeTurn();
   if (sendToServer) {
-    socket.emit("blackPlayedMove", { url: window.location.href, move: move });
+    socket.emit("PlayedMove", { url: window.location.href, move: move });
   }
   if (Moves.length === 2) {
 
@@ -2223,17 +2226,17 @@ function MakeMove(board, move, smooth, sendToServer) {
 
   if (turn == 1) {
     document
-      .getElementsByClassName("timer")[1]
+      .getElementsByClassName("timer")[0]
       .classList.remove("disabled-white-timer");
     document
-      .getElementsByClassName("timer")[0]
+      .getElementsByClassName("timer")[1]
       .classList.add("disabled-black-timer");
   } else {
     document
-      .getElementsByClassName("timer")[0]
+      .getElementsByClassName("timer")[1]
       .classList.remove("disabled-black-timer");
     document
-      .getElementsByClassName("timer")[1]
+      .getElementsByClassName("timer")[0]
       .classList.add("disabled-white-timer");
   }
 }

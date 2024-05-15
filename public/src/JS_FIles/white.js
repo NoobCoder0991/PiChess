@@ -11,7 +11,6 @@ socket.on("ready-ok", (data) => {
   if (data) {
     myInfo = data.myInfo;
     opponentInfo = data.opponentInfo;
-    document.getElementsByClassName("reconnecting")[0].style.display = "none";
     document.getElementsByClassName("profile-name")[0].innerHTML =
       data.opponentInfo.username;
     document.getElementsByClassName("profile-name")[1].innerHTML =
@@ -24,16 +23,19 @@ socket.on("ready-ok", (data) => {
       "(" + data.opponentInfo.rating + ")";
     document.getElementsByClassName("profile-rating")[1].innerHTML =
       "(" + data.myInfo.rating + ")";
+
+    document.getElementsByTagName('title')[0].innerHTML = 'Play Online-' + myInfo.username
   }
 
   document.getElementsByClassName("reconnected")[0].style.display = "flex";
+  document.getElementsByClassName("reconnecting")[0].style.display = "none";
   setTimeout(() => {
     document.getElementsByClassName("reconnected")[0].style.display = "none";
   }, 3000);
 });
 
 /*when the opponent plays move */
-socket.on("blackResponce", (move) => {
+socket.on("Responce", (move) => {
   fastForward();
   MakeMove(board, move, true, false);
 });
@@ -56,6 +58,7 @@ socket.on("played-illegal-move", (data) => {
 
 socket.on("opponent-lost-connection", (data) => {
   document.getElementsByClassName("reconnecting")[0].style.display = "flex";
+  document.getElementsByClassName("reconnected")[0].style.display = "none";
 });
 
 socket.on("updateTimeResponce", (data) => {
@@ -2053,6 +2056,8 @@ function refreshBoard(move, smooth, type) {
   pieceLocations.find(
     (obj) => obj.squareIndex === move.startSquare
   ).squareIndex = move.targetSquare;
+  highlightLastMove(move.startSquare, move.targetSquare);
+
   playSoundEffects(type);
   document
     .getElementsByClassName("action")[1]
@@ -2234,7 +2239,7 @@ function MakeMove(board, move, smooth, sendToServer) {
 
   changeTurn();
   if (sendToServer) {
-    socket.emit("whitePlayedMove", { url: window.location.href, move: move });
+    socket.emit("PlayedMove", { url: window.location.href, move: move });
   }
   if (Moves.length == 2 && !gameOver) {
     enableOptions();

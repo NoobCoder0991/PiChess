@@ -1069,6 +1069,9 @@ function checkKingIndex(color) {
   }
 }
 // //adding drag and drop behaviour
+document.addEventListener('wheel', e => {
+  e.preventDefault()
+})
 let draggedElementIndex = null;
 
 function addMoveBehaviourToPieces() {
@@ -1076,6 +1079,7 @@ function addMoveBehaviourToPieces() {
     chessPieces[i].addEventListener("dragstart", (e) => {
       e.preventDefault();
     });
+
   }
   let draggedIndex = null;
   let draggedSquareIndex = null;
@@ -2308,6 +2312,8 @@ function refreshBoard(move, smooth, type) {
 //Main Game Engine(New optimized,fast and powerful)
 function gameEngine(board, color) {
 
+  // return
+
 
   document.getElementsByTagName("title")[0].innerHTML =
     "Computer playing-PiChess Play with computer";
@@ -2316,7 +2322,7 @@ function gameEngine(board, color) {
   let depth = Depth;
   let bestmoves;
   let startTime = new Date().getTime();
-  let searchResult = iterativeDeepening(board, color, 100 * depth, 5 * depth);
+  let searchResult = iterativeDeepening(board, color, 150 * depth, 5 * depth);
   let endTime = new Date().getTime();
   bestmoves = searchResult.bestmoves;
   let deltaT = endTime - startTime;

@@ -6,7 +6,7 @@
  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto+Slab:wght@100..900&display=swap');
 
  :root {
-     --body-color: #222;
+     --body-color: #312e2b;
      --primary: rgb(23, 23, 23);
      --default-color: #bababa;
      --accent: rgb(205, 40, 18);
@@ -37,7 +37,7 @@
 
      color: #bababa;
      background-color: var(--body-color);
-     background-color: #333;
+     background-color: var(--body-color);
      margin: 0;
      padding: 0;
  }
@@ -818,6 +818,7 @@
      height: 100vh;
      z-index: -1;
      object-fit: cover;
+     display: none;
  }
 
  .second-board-title {

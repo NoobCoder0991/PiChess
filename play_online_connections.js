@@ -1,9 +1,10 @@
 const db = require("./database/dbmethods");
 const chess = require("./chess");
 const helper_functions = require("./helper_functions");
-function handlePlayOnlineConnections(online) {
-  var onlinePlayers = [];
 
+function handlePlayOnlineConnections(online) {
+
+  var onlinePlayers = [];
   var roomCount = 1;
 
   online.on("connection", (socket) => {
@@ -15,7 +16,6 @@ function handlePlayOnlineConnections(online) {
           myInfo: socket.userInfo,
           opponentInfo: socket.oppositeSocket.userInfo,
         });
-
         socket.oppositeSocket.emit("ready-ok", null);
         if (socket.gameOver || socket.oppositeSocket.gameOver) {
           socket.emit("gameover", { ok: false });
@@ -50,8 +50,8 @@ function handlePlayOnlineConnections(online) {
         socket2.room = roomName;
         socket1.startTime = new Date().getTime();
         socket2.startTime = new Date().getTime();
-        socket1.remainingTime = 30000;
-        socket2.remainingTime = 30000;
+        socket1.remainingTime = 60000;
+        socket2.remainingTime = 60000;
 
         socket1.oppositeSocket = socket2;
         socket2.oppositeSocket = socket1;
@@ -174,7 +174,7 @@ function handlePlayOnlineConnections(online) {
         updateTimer(socket2);
       }
 
-      socket.on("whitePlayedMove", (data) => {
+      socket.on("PlayedMove", (data) => {
         if (socket.gameOver) {
           return;
         }
@@ -187,14 +187,15 @@ function handlePlayOnlineConnections(online) {
         let oppositeGameState = oppositeMatch.game_details;
         const userid = match.userid;
         const opponentUserid = oppositeMatch.userid;
-        if (gameState.turn == -1) {
+        if (gameState.turn == -socket.color) {
           /**cheating (against turn)*/
+          console.log("Cheating against turn")
           return;
         }
         let legal = chess.isLegal(
           gameState.board,
-          1,
-          1,
+          socket.color,
+          socket.color,
           gameState.whiteCastle,
           gameState.blackCastle,
           gameState.enPassantForWhite,
@@ -203,7 +204,7 @@ function handlePlayOnlineConnections(online) {
         );
         if (legal.ok) {
           let transformedMove = chess.transformMove(data.move);
-          online.to(socket.room).emit("whiteResponce", transformedMove);
+          socket.oppositeSocket.emit("Responce", transformedMove);
           if (socket.game_details.Moves.length) {
             socket.countDown = false;
             socket.oppositeSocket.countDown = true;
@@ -211,22 +212,22 @@ function handlePlayOnlineConnections(online) {
           }
           match.game_details.Moves.push(data.move);
           match.game_details.pgn += legal.move + " "
-          match.socket.game_details.Moves.push(data.move);
-          match.socket.game_details.pgn += legal.move + " ";
+          socket.game_details.Moves.push(data.move);
+          socket.game_details.pgn += legal.move + " ";
           oppositeMatch.game_details.Moves.push(chess.transformMove(data.move));
           oppositeMatch.game_details.pgn += legal.move + " ";
-          oppositeMatch.socket.game_details.Moves.push(
+          socket.oppositeSocket.game_details.Moves.push(
             chess.transformMove(data.move)
           );
-          oppositeMatch.socket.game_details.pgn += legal.move + " "
-          let result = chess.playMove(gameState.board, data.move, 1, 1, gameState.whiteCastle, gameState.blackCastle, gameState.enPassantForWhite, gameState.enPassantForBlack, true);
-          chess.playMove(oppositeGameState.board, transformedMove, 1, -1, oppositeGameState.whiteCastle, oppositeGameState.blackCastle, oppositeGameState.enPassantForWhite, oppositeGameState.enPassantForBlack);
-          chess.playMove(socket.game_details.board, data.move, 1, 1, socket.game_details.whiteCastle, socket.game_details.blackCastle, socket.game_details.enPassantForWhite, socket.game_details.enPassantForBlack, true);
-          chess.playMove(socket.oppositeSocket.game_details.board, transformedMove, 1, -1, socket.oppositeSocket.game_details.whiteCastle, socket.oppositeSocket.game_details.blackCastle, socket.oppositeSocket.game_details.enPassantForWhite, socket.oppositeSocket.game_details.enPassantForBlack, true);
-          match.game_details.turn = -1;
-          match.socket.game_details.turn = -1;
-          oppositeMatch.game_details.turn = -1;
-          oppositeMatch.socket.game_details.turn = -1;
+          socket.oppositeSocket.game_details.pgn += legal.move + " "
+          let result = chess.playMove(gameState.board, data.move, socket.color, socket.color, gameState.whiteCastle, gameState.blackCastle, gameState.enPassantForWhite, gameState.enPassantForBlack, true);
+          chess.playMove(oppositeGameState.board, transformedMove, socket.color, -socket.color, oppositeGameState.whiteCastle, oppositeGameState.blackCastle, oppositeGameState.enPassantForWhite, oppositeGameState.enPassantForBlack);
+          chess.playMove(socket.game_details.board, data.move, socket.color, socket.color, socket.game_details.whiteCastle, socket.game_details.blackCastle, socket.game_details.enPassantForWhite, socket.game_details.enPassantForBlack, true);
+          chess.playMove(socket.oppositeSocket.game_details.board, transformedMove, socket.color, -socket.color, socket.oppositeSocket.game_details.whiteCastle, socket.oppositeSocket.game_details.blackCastle, socket.oppositeSocket.game_details.enPassantForWhite, socket.oppositeSocket.game_details.enPassantForBlack, true);
+          match.game_details.turn = -socket.color;
+          socket.game_details.turn = -socket.color;
+          oppositeMatch.game_details.turn = -socket.color;
+          socket.oppositeSocket.game_details.turn = -socket.color;
 
           if (result.gameOver) {
 
@@ -237,7 +238,7 @@ function handlePlayOnlineConnections(online) {
                 opponentUserid,
                 gameState,
                 oppositeGameState,
-                1,
+                socket.color,
                 result.result
               );
             } else if (result.result == "stalemate") {
@@ -254,6 +255,7 @@ function handlePlayOnlineConnections(online) {
             }
           }
         } else {
+          console.log("Cheating by playing illegal Move")
           socket.emit("played-illegal-move", {
             move: data.move,
             cRights: chess.storeCastlingRights(
@@ -267,115 +269,13 @@ function handlePlayOnlineConnections(online) {
           });
         }
       });
-      socket.on("blackPlayedMove", (data) => {
-        if (socket.gameOver) {
-          return;
-        }
-
-        const url = data.url;
-        const oppositeUrl = socket.oppositeSocket.url;
-        let match = onlinePlayers.find((obj) => obj.url == url);
-        let oppositeMatch = onlinePlayers.find((obj) => obj.url == oppositeUrl);
-        let gameState = match.game_details;
-        let oppositeGameState = oppositeMatch.game_details;
-        const userid = match.userid;
-        const opponentUserid = oppositeMatch.userid;
-        if (gameState.turn == 1) {
-          /**cheating (against turn)*/
-          return;
-        }
-        let legal = chess.isLegal(
-          gameState.board,
-          -1,
-          -1,
-          gameState.whiteCastle,
-          gameState.blackCastle,
-          gameState.enPassantForWhite,
-          gameState.enPassantForBlack,
-          data.move
-        );
-
-        if (legal.ok) {
-          console.log("black played legal move");
-
-          let transformedMove = chess.transformMove(data.move);
-          online.to(socket.room).emit("blackResponce", transformedMove);
-          if (socket.game_details.Moves.length) {
-            socket.countDown = false;
-            socket.oppositeSocket.countDown = true;
-          }
-          if (socket.game_details.Moves.length > 1) {
-            socket.remainingTime += 2000;
-          }
-          match.game_details.Moves.push(data.move);
-          match.game_details.pgn += legal.move + " "
-          match.socket.game_details.Moves.push(data.move);
-          match.socket.game_details.pgn += legal.move + " ";
-          oppositeMatch.game_details.Moves.push(transformedMove);
-          oppositeMatch.game_details.pgn += legal.move + " ";
-          oppositeMatch.socket.game_details.Moves.push(transformedMove);
-          oppositeMatch.socket.game_details.pgn += legal.move + " ";
-
-          let result = chess.playMove(gameState.board, data.move, -1, -1, gameState.whiteCastle, gameState.blackCastle, gameState.enPassantForWhite, gameState.enPassantForBlack, true);
-          chess.playMove(oppositeGameState.board, transformedMove, -1, 1, oppositeGameState.whiteCastle, oppositeGameState.blackCastle, oppositeGameState.enPassantForWhite, oppositeGameState.enPassantForBlack);
-          chess.playMove(socket.game_details.board, data.move, -1, -1, socket.game_details.whiteCastle, socket.game_details.blackCastle, socket.game_details.enPassantForWhite, socket.game_details.enPassantForBlack, true);
-          chess.playMove(socket.oppositeSocket.game_details.board, transformedMove, -1, 1, socket.oppositeSocket.game_details.whiteCastle, socket.oppositeSocket.game_details.blackCastle, socket.oppositeSocket.game_details.enPassantForWhite, socket.oppositeSocket.game_details.enPassantForBlack, true);
-
-          match.game_details.turn = 1;
-          match.socket.game_details.turn = 1;
-          oppositeMatch.game_details.turn = 1;
-          oppositeMatch.socket.game_details.turn = 1;
-          if (result.gameOver) {
-
-            if (result.result == "checkmate") {
-              updateUserInfo(
-                socket,
-                userid,
-                opponentUserid,
-                gameState,
-                oppositeGameState,
-                -1,
-                result.result
-              );
-            } else if (result.result == "stalemate") {
-              updateUserInfo(
-                socket,
-                (socket.color == 1 ? userid : opponentUserid),
-                (socket.color == 1 ? opponentUserid : userid),
-                (socket.color == 1 ? gameState : oppositeGameState),
-                (socket.color == 1 ? oppositeGameState : gameState),
-                0,
-                result.result
-              );
-            }
-          }
-        } else {
-          /**cheating detected(illegal move) */
-          console.log("black played Ilegal move");
-          socket.emit("played-illegal-move", {
-            move: data.move,
-            cRights: chess.storeCastlingRights(
-              gameState.whiteCastle,
-              gameState.blackCastle
-            ),
-            eRights: chess.storeEnPassantRights(
-              gameState.enPassantForWhite,
-              gameState.enPassantForBlack
-            ),
-          });
-        }
-      });
-
       socket.on("fetch-data-request-online", (data) => {
         let match = onlinePlayers.find((obj) => obj.url == data.url);
 
         socket.emit("fetch-data-responce-online", match.game_details);
       });
 
-      socket.on("disconnect", () => {
-        socket.disconnected = true;
-        socket.oppositeSocket.emit("opponent-lost-connection");
-      });
+
 
       socket.on('resign', data => {
         const userid = socket.userid;
@@ -408,6 +308,13 @@ function handlePlayOnlineConnections(online) {
       socket.on('draw-decline', data => {
         socket.oppositeSocket.offeredDraw = false;
       })
+
+      socket.on("disconnect", () => {
+        socket.disconnected = true;
+        socket.emit('lost-connection');
+        socket.oppositeSocket.emit("opponent-lost-connection");
+      });
+
     });
   });
 }
@@ -458,10 +365,13 @@ function updateUserInfo(
   }
   const date = helper_functions.getDate();
   const resultFen = chess.boardToFen(winnerGameState.board, perspective).split(" ")[0];
+  const winnerGameId = helper_functions.generateCode(6)
+  const loserGameId = helper_functions.generateCode(6)
   winnerInfo.games.push(
     JSON.stringify({
       game: simplifiedWinnerGame,
       pgn: winnerGameState.pgn,
+      gameId: winnerGameId,
       perspective: perspective,
       myId: winnerId,
       opponentId: loserId,
@@ -479,6 +389,7 @@ function updateUserInfo(
     JSON.stringify({
       game: simplifiedLoserGame,
       pgn: loseGameState.pgn,
+      gameId: loserGameId,
       perspective: -perspective,
       myId: loserId,
       opponentId: winnerId,

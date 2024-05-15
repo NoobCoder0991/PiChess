@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Play with computer</title>
+    <title>Play Online</title>
     <script src="/socket.io/socket.io.js"></script>
     <link rel="stylesheet" href="../../src/CSS_Files/white.css">
 
@@ -257,7 +257,7 @@
 
                 </div>
                 <div class="timer black-timer disabled-black-timer">
-                    <div class="timer-icon"><i class="fas fa-clock"></i></div>
+                    <div class="timer-icon"><i class="fas fa-stopwatch"></i></div>
                     <div class="min"></div>
                     <div>:</div>
                     <div class="sec"></div>
@@ -376,7 +376,7 @@
                     </div>
                 </div>
                 <div class="timer white-timer">
-                    <div class="timer-icon"><i class="fas fa-clock"></i></div>
+                    <div class="timer-icon"><i class="fas fa-stopwatch"></i></div>
                     <div class="min"></div>
                     <div>:</div>
                     <div class="sec"></div>
@@ -417,18 +417,21 @@
             </div>
 
             <div class="bottom-actions">
-                <div class="resign bottom-action disabled">
-                    <div class="icon"><i class="fas fa-flag"></i></div>
-                    <div>Resign</div>
-                </div>
-                <div class="draw bottom-action disabled ">
-                    <div class="icon">&frac12</div>
-                    <div>Draw</div>
-                </div>
-                <div class="bottom-action new-game enabled"><i class="fas fa-plus"></i></div>
-                <div class="bottom-action abort enabled">
-                    <i class="fas fa-times"></i>
-                    <div>Abort</div>
+                <div class="bottom-actions-component-wrapper">
+
+                    <div class="resign bottom-action disabled">
+                        <div class="icon"><i class="fas fa-flag"></i></div>
+                        <div>Resign</div>
+                    </div>
+                    <div class="draw bottom-action disabled ">
+                        <div class="icon">&frac12</div>
+                        <div>Draw</div>
+                    </div>
+                    <div class="bottom-action new-game enabled"><i class="fas fa-plus"></i></div>
+                    <div class="bottom-action abort enabled">
+                        <i class="fas fa-times"></i>
+                        <div>Abort</div>
+                    </div>
                 </div>
 
             </div>

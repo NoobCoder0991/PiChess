@@ -301,6 +301,73 @@
     .footer-option:hover {
         color: white;
     }
+
+    /* lower screen widths */
+    @media screen and (max-width:1000px) {
+
+
+        .options {
+            display: none;
+        }
+
+        .option-details {
+            width: 95vw;
+        }
+
+        .mobile-options-wrapper {
+            display: flex;
+        }
+
+        .mobile-options {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            background-color: #333;
+            width: 50%;
+            /* margin: 0 1vw; */
+            border-radius: 5px;
+            right: 50%;
+            display: none;
+            animation: appear 0.5s;
+        }
+
+        @keyframes appear {
+            0% {
+                right: 100%;
+            }
+
+            100% {
+                right: 50%;
+            }
+
+        }
+
+        .mobile-option {
+            padding: 0.5vw 1vw;
+            cursor: pointer;
+            background-color: #222;
+        }
+
+        .mobile-options-appear {
+            /* position: absolute; */
+        }
+
+        .mobile-options-appear {
+            font-size: x-large;
+            cursor: pointer;
+        }
+
+        .mobile-active-option {
+            background-color: var(--secondary);
+        }
+    }
+
+    @media screen and (max-width:800px) {
+        .option-details {
+            width: 100%;
+        }
+
+    }
 </style>
 
 <body>
@@ -312,7 +379,17 @@
             <h1><i class="fas fa-cog"></i> Settings</h1>
         </div>
 
+        <div class="mobile-options-wrapper">
+            <div class="mobile-options">
+                <div class="mobile-option mobile-profile-option mobile-active-option">Profile</div>
+                <div class="mobile-option mobile-board-settings">Board Settings</div>
+
+            </div>
+            <div class="mobile-options-appear" onclick="displayMobileOptions()"><i class="fas fa-bars"></i></div>
+
+        </div>
         <div class="content">
+
 
             <div class="options">
                 <div class="option profile-option active-option">Profile</div>
@@ -455,5 +532,11 @@
     </div>
 
 </body>
+
+<script>
+    function displayMobileOptions() {
+        document.getElementsByClassName('mobile-options')[0].style.display = 'flex'
+    }
+</script>
 
 </html>

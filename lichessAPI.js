@@ -1,3 +1,4 @@
+const axios = require('axios');
 
 const ACCESS_TOKEN = "lip_t7iqiraeAKaOjs1ZOETP"
 
@@ -10,7 +11,6 @@ const headers = {
 
 const accountUrl = `https://lichess.org/api/account`;
 
-
 // Include the access token in the request headers
 
 async function fetchDailyPuzzle() {
@@ -22,55 +22,47 @@ async function fetchDailyPuzzle() {
     try {
         const response = await fetch(puzzleUrl, { headers });
         if (response.ok) {
-            return await response.json();
+            return { ok: true, puzzle: await response.json() };
         } else {
             throw new Error("Error fetching the puzzle");
         }
     } catch (error) {
-        throw new Error("Error fetching the puzzle: " + error.message);
+        return { ok: false, err: "No Internet Connection!" }
     }
 }
 
 
-async function fetchBestMove(positionFEN) {
+async function fetchPuzzle(puzzleId) {
     try {
-        // Authenticate with Lichess API
-        const headers = {
-            'Authorization': `Bearer ${ACCESS_TOKEN}`,
-            'Content-Type': 'application/x-www-form-urlencoded'
-        };
+        // Lichess puzzle API endpoint
+        const apiUrl = `https://lichess.org/api/puzzle/${puzzleId}`;
 
-        // Submit position to Stockfish for analysis
-        const analysisResponse = await fetch('https://lichess.org/api/analysis', {
-            method: 'POST',
-            headers: headers,
-            body: `fen=${encodeURIComponent(positionFEN)}`
+        // Make a GET request to the Lichess API
+        const response = await axios.get(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${ACCESS_TOKEN}`
+            }
         });
 
-        // Check if the request was successful
-        if (analysisResponse.ok) {
-            const analysisData = await analysisResponse.json();
-            const analysisId = analysisData.id;
+        // Check if the request was successful (status code 200)
+        if (response.status === 200) {
+            // Extract relevant information from the puzzle data
+            const { fen, initialMove, solution } = response.data;
 
-            // Retrieve analysis results
-            const analysisUrl = `https://lichess.org/api/analysis/${analysisId}`;
-            const resultResponse = await fetch(analysisUrl, { headers: headers });
-
-            // Parse results
-            if (resultResponse.ok) {
-                const resultData = await resultResponse.json();
-                const bestMove = resultData.moves[0].uci;
-                console.log('Best move suggested by Stockfish:', bestMove);
-                return bestMove;
-            } else {
-                console.error('Failed to retrieve analysis results:', resultResponse.statusText);
-            }
+            console.log("Responce:", response.data)
+            // Return the puzzle data
+            return { fen, initialMove, solution };
         } else {
-            console.error('Failed to submit position to Stockfish:', analysisResponse.statusText);
+            // If the request was not successful, throw an error
+            throw new Error(`Failed to fetch puzzle. Status code: ${response.status}`);
         }
     } catch (error) {
-        console.error('Error occurred:', error.message);
+        // Handle any errors that occur during the process
+        console.error('Error fetching puzzle:', error.message);
+        return null;
     }
 }
 
+// Example usage
 
+module.exports = { fetchDailyPuzzle }

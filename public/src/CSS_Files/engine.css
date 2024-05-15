@@ -15,7 +15,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
-    --body-color: #333;
+    --body-color: #312e2b;
     --primary: rgb(23, 23, 23);
     --default-color: #bababa;
     --accent: rgb(205, 40, 18);
@@ -477,13 +477,13 @@ action:hover {
 
 .levels {
     display: flex;
-    width: 80%;
+    /* width: 80%; */
     box-shadow: 1px 1px 0px #555;
 }
 
 .level {
-    width: 25%;
-    height: 7vh;
+    /* width: 25%; */
+    /* height: 7vh; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -491,7 +491,8 @@ action:hover {
     cursor: pointer;
     background-color: var(--body-color);
     border-right: 1px solid rgb(100, 95, 95);
-    background-color: #333;
+    /* background-color: #333; */
+    background-color: red;
 }
 
 .active-level {
@@ -876,6 +877,7 @@ a {
     height: 100vh;
     z-index: -1;
     object-fit: cover;
+    display: none;
 }
 
 .second-board-title {
@@ -947,21 +949,26 @@ a {
 .opponent-selection {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
+    width: 100%;
     align-items: center;
 
 }
 
 .row {
     display: flex;
+    width: 100%;
+    justify-content: space-around;
 
 }
 
 .opponent {
-    padding: 1vw 2vw;
+    padding: 1vw 0vw;
     cursor: pointer;
     margin: 1%;
     background-color: #333;
+    width: 25%;
+    text-align: center;
 }
 
 .active-opponent {
@@ -1114,6 +1121,11 @@ a {
 
 
 @media screen and (max-width: 800px) {
+    .opponent-selection-button {
+        padding: 2% 27%;
+
+    }
+
     .gameover-box {
         min-width: 90vw;
     }
@@ -1132,11 +1144,14 @@ a {
         padding: 1% 2%;
         border-radius: 5px;
         width: 96vw;
+        position: absolute;
         margin-left: 0;
         align-self: center;
         justify-self: center;
         justify-content: center;
         align-items: center;
+        z-index: 200;
+        height: 90%;
     }
 
     .opponent {

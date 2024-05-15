@@ -292,12 +292,11 @@ style.
               h2
                 | Change Password
             form(action='/change-password' method='post')
-            .existing-password
-              input.input(type='text' placeholder='Existing password')
+
             .new-password
-              input.input(type='text' placeholder='New password')
+              input.input(type='password' placeholder='New password')
             .confirm-new-password
-              input.input(type='text' placeholder='Confirm New password')
+              input.input(type='password' placeholder='Confirm New password')
             div
               input.submit-button-input.big-button(type='submit' value='Change Password')
           // <div class="profile-action delete-account">Delete Account</div>
